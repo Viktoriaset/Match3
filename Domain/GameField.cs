@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using ThreeInRow.Domain;
 
 namespace ThreeInRow.Back
 {
@@ -54,7 +55,7 @@ namespace ThreeInRow.Back
         {
             for (int j = 0; j < columnsCount; j++)
             {
-                if (_field[j, 0]._type == FigureType.Empty)
+                if (_field[j, 0].Type == FigureType.Empty)
                 {
                     _field[j, 0] = _creator.CreateFigure();
                 }
@@ -64,7 +65,7 @@ namespace ThreeInRow.Back
             {
                 for (int j = 0; j < rowsCount; j++)
                 {
-                    if (_field[j, i + 1]._type == FigureType.Empty)
+                    if (_field[j, i + 1].Type == FigureType.Empty)
                     {
                         Swap(new Point(j, i), new Point(j, i + 1));
                     }
@@ -131,28 +132,54 @@ namespace ThreeInRow.Back
             int points = 0;
             Figure figure = _field[element.X, element.Y];
 
-            List<Point> upMatchedPoints = FindMatchingInDirection(element.X, element.Y, _upDirection, figure);
-            List<Point> douwnMatchedPoints = FindMatchingInDirection(element.X, element.Y, _douwnDirection, figure);
+            List<Point> verticalMatchedPoints = FindMatchingInDirection(element.X, element.Y, _upDirection, figure);
+            verticalMatchedPoints.AddRange(FindMatchingInDirection(element.X, element.Y, _douwnDirection, figure));
 
-            if (1 + upMatchedPoints.Count + douwnMatchedPoints.Count > 2)
+
+            if (1 + verticalMatchedPoints.Count > 2)
             {
-                points += CountPoints(upMatchedPoints);
-                points += CountPoints(douwnMatchedPoints);
+                points += CountPoints(verticalMatchedPoints);
             }
 
-            List<Point> leftMatchedPoints = FindMatchingInDirection(element.X, element.Y, _leftDirection, figure);
-            List<Point> rightMatchedPoints = FindMatchingInDirection(element.X, element.Y, _rightDirection, figure);
+            List<Point> horizontalMatchedPoints = FindMatchingInDirection(element.X, element.Y, _leftDirection, figure);
+            horizontalMatchedPoints.AddRange(FindMatchingInDirection(element.X, element.Y, _rightDirection, figure));
 
-            if (1 + leftMatchedPoints.Count + rightMatchedPoints.Count > 2)
+            if (1 + horizontalMatchedPoints.Count > 2)
             {
-                points += CountPoints(leftMatchedPoints);
-                points += CountPoints(rightMatchedPoints);
+                points += CountPoints(horizontalMatchedPoints);
             }
 
             if (points == 0) return 0;
 
-            points += figure.Destroy();
+            if (verticalMatchedPoints.Count == 2 && horizontalMatchedPoints.Count == 2)
+            {
+                HorizontalDestroyerBonusCommand bonus = new HorizontalDestroyerBonusCommand();
+                bonus.SetGameField(this);
+                figure._bonusCommand = bonus;
+                return points;
+            } 
+            else if (horizontalMatchedPoints.Count == 3)
+            {
+                VerticalDestroyerBonusCommand bonus = new VerticalDestroyerBonusCommand();
+                bonus.SetGameField(this);
+                figure._bonusCommand = bonus;
+                return points;
+            } else if (verticalMatchedPoints.Count == 3)
+            {
+                HorizontalDestroyerBonusCommand bonus = new HorizontalDestroyerBonusCommand();
+                bonus.SetGameField(this);
+                figure._bonusCommand = bonus;
+                return points;
+            } 
+            else if (horizontalMatchedPoints.Count == 4 || verticalMatchedPoints.Count == 4)
+            {
+                HorizontalDestroyerBonusCommand bonus = new HorizontalDestroyerBonusCommand();
+                bonus.SetGameField(this);
+                figure._bonusCommand = bonus;
+                return points;
+            }
 
+            figure.Destroy(element);
             return points;
         }
 
@@ -161,7 +188,7 @@ namespace ThreeInRow.Back
             int countPoints = 0;
             for (int i = 0; i < points.Count; i++)
             {
-                countPoints += _field[points[i].X, points[i].Y].Destroy();
+                countPoints += _field[points[i].X, points[i].Y].Destroy(points[i]);
             }
 
             return countPoints;

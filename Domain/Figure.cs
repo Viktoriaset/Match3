@@ -4,24 +4,35 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ThreeInRow.Domain;
 
 namespace ThreeInRow.Back
 {
-    public class Figure : Cell, ICloneable
+    public class Figure : ICloneable
     {
-        private int points;
-        public FigureType _type { get; private set; }
-        public Bitmap _bitmap { get; set; }
+        private int _points;
         private Size _startSize;
         private Size _size;
+        public IBonusCommand _bonusCommand { private get; set; } = new EmptyBonusCommand();
+
+        public FigureType Type { get; private set; }
+        public Bitmap Bitmap { get;  set; }
+        
 
         public Figure(int points, FigureType type, Bitmap bitmap)
         {
-            this.points = points;
-            _type = type;
-            _bitmap = bitmap;
+            _points = points;
+            Type = type;
+            Bitmap = bitmap;
             _startSize = new Size(60, 60);
             _size = _startSize;
+        }
+
+        public void Draw(Graphics g, Point position)
+        {
+            Rectangle rectangle = new Rectangle(position.X, position.Y, _size.Width, _size.Height);
+            g.DrawImage(Bitmap, rectangle);
+            g.DrawImage(_bonusCommand.bitmap, rectangle);
         }
 
         public void Select()
@@ -35,26 +46,31 @@ namespace ThreeInRow.Back
             _size = _startSize;
         }
 
-        public override int Destroy()
+        public int Destroy(Point position)
         {
-            _bitmap = Resource1.Image1;
-            _type = FigureType.Empty;
+            if (Type == FigureType.Empty) return 0;
+            int points = _points + _bonusCommand.UseBonus(position);
+
+            Bitmap = Resource1.Image1;
+            Type = FigureType.Empty;
+            _bonusCommand = new EmptyBonusCommand();
+
             return points;
         }
 
         public object Clone()
         {
-            return new Figure(points, _type, (Bitmap)_bitmap.Clone());
+            return new Figure(_points, Type, (Bitmap)Bitmap.Clone());
         }
 
         public static bool operator ==(Figure a, Figure b)
         {
-            return a._type == b._type;
+            return a.Type == b.Type;
         }
 
         public static bool operator !=(Figure a, Figure b)
         {
-            return a._type != b._type;
+            return a.Type != b.Type;
         }
 
         public Size GetSize()

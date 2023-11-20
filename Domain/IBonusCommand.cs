@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ThreeInRow.Back
+namespace ThreeInRow.Domain
 {
-    public abstract class Cell
+    public abstract class IBonusCommand
     {
-        public abstract int Destroy();
+        public Bitmap bitmap;
+        public abstract int UseBonus(Point point);
     }
 }

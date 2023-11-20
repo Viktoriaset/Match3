@@ -46,15 +46,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Back\BaseBonusDecorator.cs" />
-    <Compile Include="Back\BombBonusDecorator.cs" />
-    <Compile Include="Back\DestroyerBonusDecorator.cs" />
-    <Compile Include="Back\Cell.cs" />
-    <Compile Include="Back\Figure.cs" />
-    <Compile Include="Back\FigureCreator.cs" />
-    <Compile Include="Back\GameField.cs" />
-    <Compile Include="Back\RandomElementListExtension.cs" />
-    <Compile Include="Back\RandomFigureCreator.cs" />
+    <Compile Include="Domain\EmptyBonusCommand.cs" />
+    <Compile Include="Domain\Figure.cs" />
+    <Compile Include="Domain\FigureCreator.cs" />
+    <Compile Include="Domain\GameField.cs" />
+    <Compile Include="Domain\HorizontalDestroyerBonusCommand.cs" />
+    <Compile Include="Domain\IBonusCommand.cs" />
+    <Compile Include="Domain\RandomElementListExtension.cs" />
+    <Compile Include="Domain\RandomFigureCreator.cs" />
+    <Compile Include="Domain\VerticalDestroyerBonusCommand.cs" />
     <Compile Include="Level1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,6 +123,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Image1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\HorizontalDestroyer.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Empty.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow 1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow 11.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -121,8 +121,14 @@
   <data name="Ellipse_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Ellipse 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Empty.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Hexogen" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Hexogen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="HorizontalDestroyer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Arrow 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Image1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Image1.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -135,5 +141,8 @@
   </data>
   <data name="Star_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Star 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="VerticalDestroyer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Arrow 11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

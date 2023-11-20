@@ -73,9 +73,29 @@ namespace ThreeInRow {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Empty {
+            get {
+                object obj = ResourceManager.GetObject("Empty", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Hexogen {
             get {
                 object obj = ResourceManager.GetObject("Hexogen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HorizontalDestroyer {
+            get {
+                object obj = ResourceManager.GetObject("HorizontalDestroyer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -116,6 +136,16 @@ namespace ThreeInRow {
         internal static System.Drawing.Bitmap Star_1 {
             get {
                 object obj = ResourceManager.GetObject("Star_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap VerticalDestroyer {
+            get {
+                object obj = ResourceManager.GetObject("VerticalDestroyer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

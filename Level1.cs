@@ -44,15 +44,12 @@ namespace ThreeInRow
             {
                 for (int j = 0; j < gameField.columnsCount; j++)
                 {
-                    Figure figure = gameField.GetElement(i, j);
-                    Rectangle imageRectangle = new Rectangle(
+                    Point position = new Point(
                         startPoint + i * size,
-                        startPoint + j * size,
-                        figure.GetSize().Width,
-                        figure.GetSize().Height
+                        startPoint + j * size
                     );
 
-                    g.DrawImage(gameField.GetElement(i, j)._bitmap, imageRectangle);
+                    gameField.GetElement(i, j).Draw(g, position);
                 }
             }
         }
