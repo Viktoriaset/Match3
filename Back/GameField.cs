@@ -1,26 +1,234 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 
 namespace ThreeInRow.Back
 {
     public class GameField
     {
-        private int[,] _field;
+        private Figure[,] _field;
+        public int rowsCount { get; }
+        public int columnsCount { get; }
+
+        private Point selectedElement = new Point(-1, -1);
+
+        private Direction _leftDirection = new Direction(-1, 0);
+        private Direction _rightDirection = new Direction(1, 0);
+        private Direction _upDirection = new Direction(0, 1);
+        private Direction _douwnDirection = new Direction(0, -1);
+
+        private FigureCreator _creator;
+
 
         public GameField(int rowsCount, int columnsCount)
         {
-            _field = new int[rowsCount, columnsCount];
+            this.rowsCount = rowsCount;
+            this.columnsCount = columnsCount;
+            _field = new Figure[rowsCount, columnsCount];
+            _creator = new RandomFigureCreator();
         }
 
         public void FillRandomElements()
         {
-
+            for (int i = 0; i < rowsCount; i++)
+            {
+                for (int j = 0; j < columnsCount; j++)
+                {
+                    _field[i, j] = _creator.CreateFigure();
+                }
+            }
         }
 
+        public void SearchMathcing()
+        {
+            for (int i = 0; i < rowsCount; i++)
+            {
+                for (int j = 0; j < columnsCount; j++)
+                {
+                    FindAndDestroyMatchingForElement(new Point(i, j));
+                }
+            }
+        }
 
+        public void MooveElementsDouwn()
+        {
+            for (int j = 0; j < columnsCount; j++)
+            {
+                if (_field[j, 0]._type == FigureType.Empty)
+                {
+                    _field[j, 0] = _creator.CreateFigure();
+                }
+            }
+
+            for (int i = 0; i < columnsCount - 1; i++)
+            {
+                for (int j = 0; j < rowsCount; j++)
+                {
+                    if (_field[j, i + 1]._type == FigureType.Empty)
+                    {
+                        Swap(new Point(j, i), new Point(j, i + 1));
+                    }
+                }
+            }
+
+            SearchMathcing();
+        }
+
+        public void SelectElement(int x, int y)
+        {
+            if (selectedElement.X == -1 || selectedElement.Y == -1)
+            {
+                selectedElement.X = x;
+                selectedElement.Y = y;
+                _field[x, y].Select();
+                return;
+            }
+
+            Direction direction = new Direction(x - selectedElement.X, y - selectedElement.Y);
+            if (direction.GetLen() != 1)
+            {
+                UnSelectElement();
+                return;
+            }
+
+            Point secondElement = new Point(x, y);
+            Swap(selectedElement, secondElement);
+
+            int points = 0;
+            points += FindAndDestroyMatchingForElement(selectedElement);
+            points += FindAndDestroyMatchingForElement(secondElement);
+
+            if (points == 0)
+            {
+                Swap(selectedElement, secondElement);
+            }
+
+            UnSelectElement();
+        }
+
+        public void UnSelectElement()
+        {
+            if (selectedElement.X == -1 || selectedElement.Y == -1)
+            {
+                return;
+            }
+
+            _field[selectedElement.X, selectedElement.Y].UnSelect();
+            selectedElement.X = -1;
+            selectedElement.Y = -1;
+        }
+
+        public void Swap(Point element1, Point element2)
+        {
+            Figure figure = _field[element1.X, element1.Y];
+            figure.UnSelect();
+            _field[element1.X, element1.Y] = _field[element2.X, element2.Y];
+            _field[element2.X, element2.Y] = figure;
+        }
+
+        public int FindAndDestroyMatchingForElement(Point element)
+        {
+            int points = 0;
+            Figure figure = _field[element.X, element.Y];
+
+            List<Point> upMatchedPoints = FindMatchingInDirection(element.X, element.Y, _upDirection, figure);
+            List<Point> douwnMatchedPoints = FindMatchingInDirection(element.X, element.Y, _douwnDirection, figure);
+
+            if (1 + upMatchedPoints.Count + douwnMatchedPoints.Count > 2)
+            {
+                points += CountPoints(upMatchedPoints);
+                points += CountPoints(douwnMatchedPoints);
+            }
+
+            List<Point> leftMatchedPoints = FindMatchingInDirection(element.X, element.Y, _leftDirection, figure);
+            List<Point> rightMatchedPoints = FindMatchingInDirection(element.X, element.Y, _rightDirection, figure);
+
+            if (1 + leftMatchedPoints.Count + rightMatchedPoints.Count > 2)
+            {
+                points += CountPoints(leftMatchedPoints);
+                points += CountPoints(rightMatchedPoints);
+            }
+
+            if (points == 0) return 0;
+
+            points += figure.Destroy();
+
+            return points;
+        }
+
+        private int CountPoints(List<Point> points)
+        {
+            int countPoints = 0;
+            for (int i = 0; i < points.Count; i++)
+            {
+                countPoints += _field[points[i].X, points[i].Y].Destroy();
+            }
+
+            return countPoints;
+        }
+
+        private List<Point> FindMatchingInDirection(int x, int y, Direction direction, Figure figure)
+        {
+            List<Point> matchedPoints = new List<Point>();
+            x += direction.x;
+            y += direction.y;
+
+            while (x >= 0 && x < columnsCount && y >= 0 && y < rowsCount)
+            {
+                if (figure == _field[x, y])
+                {
+                    matchedPoints.Add(new Point(x, y));
+                    x += direction.x;
+                    y += direction.y;
+                }
+                else
+                {
+                    return matchedPoints;
+                }
+            }
+
+            return matchedPoints;
+        }
+
+        public Figure GetElement(int x, int y)
+        {
+            if (x >= 0 && y >= 0 && x < columnsCount && y < rowsCount)
+            {
+                return _field[x, y];
+            }
+
+            return null;
+        }
+    }
+
+    public struct Direction
+    {
+        public Direction(int directionX, int directionY)
+        {
+            x = directionX;
+            y = directionY;
+        }
+
+        public int x { get; set; }
+        public int y { get; set; }
+
+        public void SwapXAndY()
+        {
+            int buffer = x;
+            x = y;
+            y = buffer;
+        }
+
+        public int GetLen()
+        {
+            return Math.Abs(x + y);
+        }
+
+        public static Direction operator *(Direction direction, int number)
+        {
+            direction.x *= number;
+            direction.y *= number;
+            return direction;
+        }
     }
 }
