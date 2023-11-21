@@ -63,6 +63,16 @@ namespace ThreeInRow {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Bomp {
+            get {
+                object obj = ResourceManager.GetObject("Bomp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Ellipse_1 {
             get {
                 object obj = ResourceManager.GetObject("Ellipse_1", resourceCulture);
