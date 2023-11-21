@@ -5,9 +5,9 @@ using ThreeInRow.Domain;
 
 namespace ThreeInRow.Back
 {
-    public class GameField
+    public class GameField: IFigureDestroyedObservable
     {
-        private Figure[,] _field;
+        private Shape[,] _field;
         public int rowsCount { get; }
         public int columnsCount { get; }
 
@@ -20,6 +20,8 @@ namespace ThreeInRow.Back
 
         private FigureCreator _creator;
 
+        private List<IFigureDestroyedObserver> figureDestroidObservers =
+            new List<IFigureDestroyedObserver>();
 
         public GameField(int rowsCount, int columnsCount)
         {
@@ -27,6 +29,30 @@ namespace ThreeInRow.Back
             this.columnsCount = columnsCount;
             _field = new Figure[rowsCount, columnsCount];
             _creator = new RandomFigureCreator();
+        }
+
+        public void Subscribe(IFigureDestroyedObserver observer)
+        {
+            if (!figureDestroidObservers.Contains(observer))
+            {
+                figureDestroidObservers.Add(observer);
+            }   
+        }
+
+        public void Unsubscribe(IFigureDestroyedObserver observer)
+        {
+            if (figureDestroidObservers.Contains(observer))
+            {
+                figureDestroidObservers.Remove(observer);
+            }
+        }
+        
+        public void FigureDestroyed(int points)
+        {
+            foreach(var observer in figureDestroidObservers)
+            {
+                observer.FigureDestroyed(points);
+            }
         }
 
         public void FillRandomElements()
@@ -55,7 +81,7 @@ namespace ThreeInRow.Back
         {
             for (int j = 0; j < columnsCount; j++)
             {
-                if (_field[j, 0].Type == FigureType.Empty)
+                if (_field[j, 0].Type == ShapeType.Empty)
                 {
                     _field[j, 0] = _creator.CreateFigure();
                 }
@@ -65,7 +91,7 @@ namespace ThreeInRow.Back
             {
                 for (int j = 0; j < rowsCount; j++)
                 {
-                    if (_field[j, i + 1].Type == FigureType.Empty)
+                    if (_field[j, i + 1].Type == ShapeType.Empty)
                     {
                         Swap(new Point(j, i), new Point(j, i + 1));
                     }
@@ -121,7 +147,7 @@ namespace ThreeInRow.Back
 
         public void Swap(Point element1, Point element2)
         {
-            Figure figure = _field[element1.X, element1.Y];
+            Shape figure = _field[element1.X, element1.Y];
             figure.UnSelect();
             _field[element1.X, element1.Y] = _field[element2.X, element2.Y];
             _field[element2.X, element2.Y] = figure;
@@ -130,7 +156,7 @@ namespace ThreeInRow.Back
         public int FindAndDestroyMatchingForElement(Point element)
         {
             int points = 0;
-            Figure figure = _field[element.X, element.Y];
+            Shape figure = _field[element.X, element.Y];
 
             List<Point> verticalMatchedPoints = FindMatchingInDirection(element.X, element.Y, _upDirection, figure);
             verticalMatchedPoints.AddRange(FindMatchingInDirection(element.X, element.Y, _douwnDirection, figure));
@@ -155,27 +181,23 @@ namespace ThreeInRow.Back
             {
                 HorizontalDestroyerBonusCommand bonus = new HorizontalDestroyerBonusCommand();
                 bonus.SetGameField(this);
-                figure._bonusCommand = bonus;
                 return points;
             } 
             else if (horizontalMatchedPoints.Count == 3)
             {
                 VerticalDestroyerBonusCommand bonus = new VerticalDestroyerBonusCommand();
                 bonus.SetGameField(this);
-                figure._bonusCommand = bonus;
                 return points;
             } else if (verticalMatchedPoints.Count == 3)
             {
                 HorizontalDestroyerBonusCommand bonus = new HorizontalDestroyerBonusCommand();
                 bonus.SetGameField(this);
-                figure._bonusCommand = bonus;
                 return points;
             } 
             else if (horizontalMatchedPoints.Count == 4 || verticalMatchedPoints.Count == 4)
             {
                 HorizontalDestroyerBonusCommand bonus = new HorizontalDestroyerBonusCommand();
                 bonus.SetGameField(this);
-                figure._bonusCommand = bonus;
                 return points;
             }
 
@@ -188,13 +210,20 @@ namespace ThreeInRow.Back
             int countPoints = 0;
             for (int i = 0; i < points.Count; i++)
             {
-                countPoints += _field[points[i].X, points[i].Y].Destroy(points[i]);
+                DestroyFigure(points[i]);
             }
 
             return countPoints;
         }
 
-        private List<Point> FindMatchingInDirection(int x, int y, Direction direction, Figure figure)
+        public void DestroyFigure(Point position)
+        {
+            int points = _field[position.X, position.Y].Destroy(position);
+
+            FigureDestroyed(points);
+        }
+
+        private List<Point> FindMatchingInDirection(int x, int y, Direction direction, Shape figure)
         {
             List<Point> matchedPoints = new List<Point>();
             x += direction.x;
@@ -217,7 +246,7 @@ namespace ThreeInRow.Back
             return matchedPoints;
         }
 
-        public Figure GetElement(int x, int y)
+        public Shape GetElement(int x, int y)
         {
             if (x >= 0 && y >= 0 && x < columnsCount && y < rowsCount)
             {
