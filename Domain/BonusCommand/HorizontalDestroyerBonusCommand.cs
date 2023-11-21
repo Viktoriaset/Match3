@@ -1,39 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ThreeInRow.Back;
 
 namespace ThreeInRow.Domain
 {
-    internal class HorizontalDestroyerBonusCommand : IBonusCommand
+    internal class HorizontalDestroyerBonusCommand : IBonusCommand, ICloneable
     {
-        private GameField _gameField;
-
-       public HorizontalDestroyerBonusCommand()
+        public HorizontalDestroyerBonusCommand(Bitmap bitmap)
         {
-            bitmap = Resource1.HorizontalDestroyer;
+            this.bitmap = bitmap;
         }
 
-        public void SetGameField(GameField gameField)
+        public object Clone()
         {
-            _gameField = gameField;
+            return MemberwiseClone();
         }
 
-        public override int UseBonus(Point point)
+        public override int UseBonus(Point point, GameField gameField)
         {
-            int countPoints = 0;
-            for (int i = 0; i < _gameField.columnsCount; i++)
+            for (int i = 0; i < gameField.columnsCount; i++)
             {
                 if (i != point.X)
                 {
-                    countPoints += _gameField.GetElement(i, point.Y).Destroy(new Point(i, point.Y));
+                    gameField.DestroyElement(new Point(i, point.Y));
                 }
             }
 
-            return countPoints;
+            return points;
         }
     }
 }

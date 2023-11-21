@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
+using ThreeInRow.Back;
 
 namespace ThreeInRow.Domain
 {
     public abstract class IBonusCommand
     {
         public Bitmap bitmap;
-        public abstract int UseBonus(Point point);
+        protected int points;
+        public abstract int UseBonus(Point point, GameField gameField);
     }
 }

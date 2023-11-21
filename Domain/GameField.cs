@@ -5,7 +5,7 @@ using ThreeInRow.Domain;
 
 namespace ThreeInRow.Back
 {
-    public class GameField
+    public class GameField : IFigureDestroyedObservable
     {
         private Figure[,] _field;
         public int rowsCount { get; }
@@ -19,6 +19,11 @@ namespace ThreeInRow.Back
         private Direction _douwnDirection = new Direction(0, -1);
 
         private FigureCreator _creator;
+        private List<IFigureDestroyedObserver> figureDestroyedObservers
+            = new List<IFigureDestroyedObserver>();
+        private BonusCreator _horizontalDestroyerBonusCreator = new HorizontalDestroyerBonusCreator();
+        private BonusCreator _verticalDestroyerBonusCreator = new VerticalDestroyerBonusCreator();
+        private BonusCreator _bombDestroyerBonusCreator;
 
 
         public GameField(int rowsCount, int columnsCount)
@@ -95,11 +100,8 @@ namespace ThreeInRow.Back
             Point secondElement = new Point(x, y);
             Swap(selectedElement, secondElement);
 
-            int points = 0;
-            points += FindAndDestroyMatchingForElement(selectedElement);
-            points += FindAndDestroyMatchingForElement(secondElement);
-
-            if (points == 0)
+            if (!FindAndDestroyMatchingForElement(selectedElement)
+                && !FindAndDestroyMatchingForElement(secondElement))
             {
                 Swap(selectedElement, secondElement);
             }
@@ -127,9 +129,9 @@ namespace ThreeInRow.Back
             _field[element2.X, element2.Y] = figure;
         }
 
-        public int FindAndDestroyMatchingForElement(Point element)
+        public bool FindAndDestroyMatchingForElement(Point element)
         {
-            int points = 0;
+            bool isMathced = false;
             Figure figure = _field[element.X, element.Y];
 
             List<Point> verticalMatchedPoints = FindMatchingInDirection(element.X, element.Y, _upDirection, figure);
@@ -138,7 +140,8 @@ namespace ThreeInRow.Back
 
             if (1 + verticalMatchedPoints.Count > 2)
             {
-                points += CountPoints(verticalMatchedPoints);
+                DestroyPointList(verticalMatchedPoints);
+                isMathced = true;
             }
 
             List<Point> horizontalMatchedPoints = FindMatchingInDirection(element.X, element.Y, _leftDirection, figure);
@@ -146,52 +149,54 @@ namespace ThreeInRow.Back
 
             if (1 + horizontalMatchedPoints.Count > 2)
             {
-                points += CountPoints(horizontalMatchedPoints);
+                DestroyPointList(horizontalMatchedPoints);
+                isMathced = true;
             }
 
-            if (points == 0) return 0;
+            if (!isMathced)
+            {
+                return false;
+            }
 
             if (verticalMatchedPoints.Count == 2 && horizontalMatchedPoints.Count == 2)
             {
-                HorizontalDestroyerBonusCommand bonus = new HorizontalDestroyerBonusCommand();
-                bonus.SetGameField(this);
-                figure._bonusCommand = bonus;
-                return points;
-            } 
+                figure.BonusCommand = _horizontalDestroyerBonusCreator.CreateBonus(); // TODO create bomb
+            }
             else if (horizontalMatchedPoints.Count == 3)
             {
-                VerticalDestroyerBonusCommand bonus = new VerticalDestroyerBonusCommand();
-                bonus.SetGameField(this);
-                figure._bonusCommand = bonus;
-                return points;
-            } else if (verticalMatchedPoints.Count == 3)
+                figure.BonusCommand = _verticalDestroyerBonusCreator.CreateBonus();
+            }
+            else if (verticalMatchedPoints.Count == 3)
             {
-                HorizontalDestroyerBonusCommand bonus = new HorizontalDestroyerBonusCommand();
-                bonus.SetGameField(this);
-                figure._bonusCommand = bonus;
-                return points;
-            } 
+                figure.BonusCommand = _horizontalDestroyerBonusCreator.CreateBonus();
+            }
             else if (horizontalMatchedPoints.Count == 4 || verticalMatchedPoints.Count == 4)
             {
-                HorizontalDestroyerBonusCommand bonus = new HorizontalDestroyerBonusCommand();
-                bonus.SetGameField(this);
-                figure._bonusCommand = bonus;
-                return points;
+                figure.BonusCommand = _horizontalDestroyerBonusCreator.CreateBonus(); // TODO create bomb
             }
 
-            figure.Destroy(element);
-            return points;
+            DestroyElement(element);
+            return true;
         }
 
-        private int CountPoints(List<Point> points)
+        private void DestroyPointList(List<Point> points)
         {
-            int countPoints = 0;
             for (int i = 0; i < points.Count; i++)
             {
-                countPoints += _field[points[i].X, points[i].Y].Destroy(points[i]);
+                DestroyElement(points[i]);
             }
+        }
 
-            return countPoints;
+        public void DestroyElement(Point point)
+        {
+            int points = 0;
+            if (_field[point.X, point.Y].HasBonus())
+            {
+                points += UseBonus(_field[point.X, point.Y].BonusCommand, point);
+            }
+            points += _field[point.X, point.Y].Destroy(point);
+
+            FigureDestroyed(points);
         }
 
         private List<Point> FindMatchingInDirection(int x, int y, Direction direction, Figure figure)
@@ -217,6 +222,11 @@ namespace ThreeInRow.Back
             return matchedPoints;
         }
 
+        private int UseBonus(IBonusCommand bonus, Point point)
+        {
+            return bonus.UseBonus(point, this);
+        }
+
         public Figure GetElement(int x, int y)
         {
             if (x >= 0 && y >= 0 && x < columnsCount && y < rowsCount)
@@ -225,6 +235,30 @@ namespace ThreeInRow.Back
             }
 
             return null;
+        }
+
+        public void Subscribe(IFigureDestroyedObserver observer)
+        {
+            if (!figureDestroyedObservers.Contains(observer))
+            {
+                figureDestroyedObservers.Add(observer);
+            }
+        }
+
+        public void Unsubscribe(IFigureDestroyedObserver observer)
+        {
+            if (figureDestroyedObservers.Contains(observer))
+            {
+                figureDestroyedObservers.Remove(observer);
+            }
+        }
+
+        public void FigureDestroyed(int points)
+        {
+            foreach (var observer in figureDestroyedObservers)
+            {
+                observer.FigureDestroyed(points);
+            }
         }
     }
 

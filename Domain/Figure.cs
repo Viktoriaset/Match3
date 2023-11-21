@@ -13,7 +13,7 @@ namespace ThreeInRow.Back
         private int _points;
         private Size _startSize;
         private Size _size;
-        public IBonusCommand _bonusCommand { private get; set; } = new EmptyBonusCommand();
+        public IBonusCommand BonusCommand;
 
         public FigureType Type { get; private set; }
         public Bitmap Bitmap { get;  set; }
@@ -32,7 +32,7 @@ namespace ThreeInRow.Back
         {
             Rectangle rectangle = new Rectangle(position.X, position.Y, _size.Width, _size.Height);
             g.DrawImage(Bitmap, rectangle);
-            g.DrawImage(_bonusCommand.bitmap, rectangle);
+            g.DrawImage(BonusCommand.bitmap, rectangle);
         }
 
         public void Select()
@@ -46,16 +46,20 @@ namespace ThreeInRow.Back
             _size = _startSize;
         }
 
+        public bool HasBonus()
+        {
+            return BonusCommand == null ? false : true;
+        }
+
         public int Destroy(Point position)
         {
             if (Type == FigureType.Empty) return 0;
-            int points = _points + _bonusCommand.UseBonus(position);
 
             Bitmap = Resource1.Image1;
             Type = FigureType.Empty;
-            _bonusCommand = new EmptyBonusCommand();
+            BonusCommand = null;
 
-            return points;
+            return _points;
         }
 
         public object Clone()
