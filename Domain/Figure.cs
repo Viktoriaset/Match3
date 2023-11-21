@@ -8,28 +8,84 @@ using ThreeInRow.Domain;
 
 namespace ThreeInRow.Back
 {
-    public class Figure : Shape, ICloneable
+    public class Figure : ICloneable
     {
         private int _points;
+        private Size _startSize;
+        private Size _size;
+        public IBonusCommand _bonusCommand { private get; set; } = new EmptyBonusCommand();
+
+        public FigureType Type { get; private set; }
+        public Bitmap Bitmap { get;  set; }
         
-        public Figure(int points, ShapeType type, Bitmap bitmap): base(type, bitmap)
+
+        public Figure(int points, FigureType type, Bitmap bitmap)
         {
             _points = points;
+            Type = type;
+            Bitmap = bitmap;
+            _startSize = new Size(60, 60);
+            _size = _startSize;
         }
 
-        public override int Destroy(Point position)
+        public void Draw(Graphics g, Point position)
         {
-            if (Type == ShapeType.Empty) return 0;
+            Rectangle rectangle = new Rectangle(position.X, position.Y, _size.Width, _size.Height);
+            g.DrawImage(Bitmap, rectangle);
+            g.DrawImage(_bonusCommand.bitmap, rectangle);
+        }
+
+        public void Select()
+        {
+            _size.Width += (_size.Width * 20) / 100;
+            _size.Height += (_size.Height * 20) / 100;
+        }
+
+        public void UnSelect()
+        {
+            _size = _startSize;
+        }
+
+        public int Destroy(Point position)
+        {
+            if (Type == FigureType.Empty) return 0;
+            int points = _points + _bonusCommand.UseBonus(position);
 
             Bitmap = Resource1.Image1;
-            Type = ShapeType.Empty;
+            Type = FigureType.Empty;
+            _bonusCommand = new EmptyBonusCommand();
 
-            return _points;
+            return points;
         }
 
         public object Clone()
         {
             return new Figure(_points, Type, (Bitmap)Bitmap.Clone());
         }
+
+        public static bool operator ==(Figure a, Figure b)
+        {
+            return a.Type == b.Type;
+        }
+
+        public static bool operator !=(Figure a, Figure b)
+        {
+            return a.Type != b.Type;
+        }
+
+        public Size GetSize()
+        {
+            return _size;
+        }
+    }
+
+    public enum FigureType
+    {
+        Circle,
+        Square,
+        Triangle,
+        Pentagon,
+        Hexagon, 
+        Empty
     }
 }
