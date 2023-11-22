@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ThreeInRow.Domain.BonusCommand;
 
 namespace ThreeInRow.Domain
 {
@@ -14,7 +10,7 @@ namespace ThreeInRow.Domain
         {
             _verticalDestroyer = new VerticalDestroyerBonusCommand(Resource1.VerticalDestroyer);
         }
-        public override IBonusCommand CreateBonus()
+        public BaseBonus CreateBonus()
         {
             return (VerticalDestroyerBonusCommand)_verticalDestroyer.Clone();
         }

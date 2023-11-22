@@ -9,31 +9,35 @@ using ThreeInRow.Back;
 
 namespace ThreeInRow.Domain.BonusCommand
 {
-    internal class BombBonusCommand : IBonusCommand
+    internal class BombBonusCommand : BaseBonus, ICloneable
     {
         private Timer timer;
-        public GameField gameField { private get; set; }
 
-        public BombBonusCommand() 
+        public BombBonusCommand(Bitmap bitmap) 
         {
-            bitmap = Resource1.Bomp;
+            this.bitmap = bitmap;
         }
 
-        public override int UseBonus(Point point)
+        public override object Clone()
+        {
+            return MemberwiseClone();
+        }
+
+        public override int UseBonus(Point point, GameField gameField)
         {
             timer = new Timer();
             timer.Interval = 250;
             timer.Tick += (sender, e) => { 
                 timer.Stop();
-                Explousion(point); 
+                Explousion(point, gameField); 
             };
 
             timer.Start();
 
-            return 200; 
+            return points; 
         }
 
-        private void Explousion(Point point)
+        private void Explousion(Point point, GameField gameField)
         {
             for (int i = -1; i < 2; i++)
             {
@@ -42,7 +46,7 @@ namespace ThreeInRow.Domain.BonusCommand
                     if (i != 0 || j != 0)
                     {
                         Point element = new Point(point.X + i, point.Y + j);
-                        gameField.GetElement(element.X, element.Y).Destroy(element);
+                        gameField.DestroyElement(element);
                     }
                 }
             }

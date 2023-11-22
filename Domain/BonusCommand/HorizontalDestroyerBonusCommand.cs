@@ -2,16 +2,16 @@
 using System.Drawing;
 using ThreeInRow.Back;
 
-namespace ThreeInRow.Domain
+namespace ThreeInRow.Domain.BonusCommand
 {
-    internal class HorizontalDestroyerBonusCommand : IBonusCommand, ICloneable
+    internal class HorizontalDestroyerBonusCommand : BaseBonus, ICloneable
     {
         public HorizontalDestroyerBonusCommand(Bitmap bitmap)
         {
             this.bitmap = bitmap;
         }
 
-        public object Clone()
+        public override object Clone()
         {
             return MemberwiseClone();
         }

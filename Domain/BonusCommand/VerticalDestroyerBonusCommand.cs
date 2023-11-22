@@ -6,16 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using ThreeInRow.Back;
 
-namespace ThreeInRow.Domain
+namespace ThreeInRow.Domain.BonusCommand
 {
-    internal class VerticalDestroyerBonusCommand : IBonusCommand, ICloneable
+    internal class VerticalDestroyerBonusCommand : BaseBonus, ICloneable
     {
         public VerticalDestroyerBonusCommand(Bitmap bitmap)
         {
             this.bitmap = bitmap;
         }
 
-        public object Clone()
+        public override object Clone()
         {
             return MemberwiseClone();
         }
@@ -26,7 +26,7 @@ namespace ThreeInRow.Domain
             {
                 if (i != point.Y)
                 {
-                   gameField.DestroyElement(new Point(i, point.Y));
+                   gameField.DestroyElement(new Point(point.X, i));
                 }
             }
 

@@ -3,6 +3,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using ThreeInRow.Back;
+using ThreeInRow.Domain;
 
 namespace ThreeInRow
 {
@@ -11,6 +12,7 @@ namespace ThreeInRow
         GameField gameField;
         int size;
         int startPoint;
+        Animator figureFallAnimator;
         public Level1()
         {
             InitializeComponent();
@@ -26,7 +28,7 @@ namespace ThreeInRow
         {
             size = 60;
             startPoint = 160;
-            gameField = new GameField(8, 8);
+            gameField = new GameField(8, 8, startPoint, size);
             gameField.FillRandomElements();
 
             Invalidate();
@@ -34,24 +36,7 @@ namespace ThreeInRow
 
         public void Update(object sender, EventArgs e)
         {
-            gameField.MooveElementsDouwn();
             Invalidate();
-        }
-
-        public void DrawMap(Graphics g)
-        {
-            for (int i = 0; i < gameField.rowsCount; i++)
-            {
-                for (int j = 0; j < gameField.columnsCount; j++)
-                {
-                    Point position = new Point(
-                        startPoint + i * size,
-                        startPoint + j * size
-                    );
-
-                    gameField.GetElement(i, j).Draw(g, position);
-                }
-            }
         }
 
         public void DrawGrid(Graphics g)
@@ -77,7 +62,9 @@ namespace ThreeInRow
 
         private void OnPaint(object sender, PaintEventArgs e)
         {
-            DrawMap(e.Graphics);
+            e.Graphics.Clear(Color.White);
+            gameField.MooveElementsDouwn();
+            gameField.DrawField(e.Graphics);
             DrawGrid(e.Graphics);
         }
 

@@ -10,7 +10,7 @@ namespace ThreeInRow.Back
     {
         public override Figure CreateFigure()
         {
-            return (Figure) _figurePrototypeList.GetRandomElement().Clone();
+            return (Figure)_figurePrototypeList.GetRandomElement().Clone();
         }
     }
 }

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using ThreeInRow.Domain;
+using ThreeInRow.Domain.BonusCommand;
+using ThreeInRow.Domain.BonusFactory;
+using ThreeInRow.Domain.FigureFactory;
 
 namespace ThreeInRow.Back
 {
@@ -23,15 +26,20 @@ namespace ThreeInRow.Back
             = new List<IFigureDestroyedObserver>();
         private BonusCreator _horizontalDestroyerBonusCreator = new HorizontalDestroyerBonusCreator();
         private BonusCreator _verticalDestroyerBonusCreator = new VerticalDestroyerBonusCreator();
-        private BonusCreator _bombDestroyerBonusCreator;
+        private BonusCreator _bombDestroyerBonusCreator = new BombBonusCreator();
+
+        private int _matrixDrawingStartPoint;
+        private int _figureCellSize;
 
 
-        public GameField(int rowsCount, int columnsCount)
+        public GameField(int rowsCount, int columnsCount, int matrixDrawingStartPoint, int figureCellSize)
         {
             this.rowsCount = rowsCount;
             this.columnsCount = columnsCount;
             _field = new Figure[rowsCount, columnsCount];
             _creator = new RandomFigureCreator();
+            _matrixDrawingStartPoint = matrixDrawingStartPoint;
+            _figureCellSize = figureCellSize;
         }
 
         public void FillRandomElements()
@@ -40,7 +48,14 @@ namespace ThreeInRow.Back
             {
                 for (int j = 0; j < columnsCount; j++)
                 {
-                    _field[i, j] = _creator.CreateFigure();
+                    EmptyFigureCreator figureCreator = new EmptyFigureCreator();
+                    Figure figure = figureCreator.CreateFigure();
+                    figure.position = new Point(
+                        _matrixDrawingStartPoint + i * _figureCellSize,
+                        _matrixDrawingStartPoint + j * _figureCellSize
+                        );
+
+                    _field[i, j] = figure;
                 }
             }
         }
@@ -56,28 +71,72 @@ namespace ThreeInRow.Back
             }
         }
 
-        public void MooveElementsDouwn()
+        public void DrawField(Graphics g)
         {
-            for (int j = 0; j < columnsCount; j++)
+            for (int i = 0; i < rowsCount; i++)
             {
-                if (_field[j, 0].Type == FigureType.Empty)
+                for (int j = 0; j < columnsCount; j++)
                 {
-                    _field[j, 0] = _creator.CreateFigure();
+                    _field[i, j].Draw(g);
                 }
             }
+        }
+
+        public void MooveElementsDouwn()
+        {
+            SpawnNewElements();
 
             for (int i = 0; i < columnsCount - 1; i++)
             {
                 for (int j = 0; j < rowsCount; j++)
                 {
-                    if (_field[j, i + 1].Type == FigureType.Empty)
+                    if (_field[j, i + 1].Type == FigureType.Empty && _field[j, i].Type != FigureType.Empty)
                     {
-                        Swap(new Point(j, i), new Point(j, i + 1));
+                        if (_field[j, i].position.Y < _field[j, i + 1].position.Y)
+                        {
+                            _field[j, i].position.Y += 10;
+                        }
+                        else
+                        {
+                            _field[j, i].position = new Point(
+                                _matrixDrawingStartPoint + j * _figureCellSize,
+                                _matrixDrawingStartPoint + i * _figureCellSize
+                                );
+                            Figure figure = _field[j, i + 1];
+                            _field[j, i + 1] = _field[j, i];
+                            _field[j, i] = figure;
+                            SwapPosition(_field[j, i + 1], _field[j, i]);
+                        }
                     }
+
                 }
             }
 
             SearchMathcing();
+        }
+
+        private void SwapPosition(Figure element1, Figure element2)
+        {
+            Point position = element1.position;
+            element1.position = element2.position;
+            element2.position = position;
+        }
+
+        private void SpawnNewElements()
+        {
+            for (int j = 0; j < columnsCount; j++)
+            {
+                if (_field[j, 0].Type == FigureType.Empty)
+                {
+                    Figure figure = _creator.CreateFigure();
+                    figure.position = new Point(
+                        _matrixDrawingStartPoint + j * _figureCellSize,
+                        _matrixDrawingStartPoint
+                        );
+
+                    _field[j, 0] = figure;
+                }
+            }
         }
 
         public void SelectElement(int x, int y)
@@ -125,8 +184,11 @@ namespace ThreeInRow.Back
         {
             Figure figure = _field[element1.X, element1.Y];
             figure.UnSelect();
+            Point position = figure.position;
             _field[element1.X, element1.Y] = _field[element2.X, element2.Y];
             _field[element2.X, element2.Y] = figure;
+            _field[element2.X, element2.Y].position = _field[element1.X, element1.Y].position;
+            _field[element1.X, element1.Y].position = position;
         }
 
         public bool FindAndDestroyMatchingForElement(Point element)
@@ -137,15 +199,18 @@ namespace ThreeInRow.Back
             List<Point> verticalMatchedPoints = FindMatchingInDirection(element.X, element.Y, _upDirection, figure);
             verticalMatchedPoints.AddRange(FindMatchingInDirection(element.X, element.Y, _douwnDirection, figure));
 
+            List<Point> horizontalMatchedPoints = FindMatchingInDirection(element.X, element.Y, _leftDirection, figure);
+            horizontalMatchedPoints.AddRange(FindMatchingInDirection(element.X, element.Y, _rightDirection, figure));
+
+            bool isBonusSeted = ChekAndCreateBonus(horizontalMatchedPoints.Count,
+                    verticalMatchedPoints.Count, figure
+                );
 
             if (1 + verticalMatchedPoints.Count > 2)
             {
                 DestroyPointList(verticalMatchedPoints);
                 isMathced = true;
             }
-
-            List<Point> horizontalMatchedPoints = FindMatchingInDirection(element.X, element.Y, _leftDirection, figure);
-            horizontalMatchedPoints.AddRange(FindMatchingInDirection(element.X, element.Y, _rightDirection, figure));
 
             if (1 + horizontalMatchedPoints.Count > 2)
             {
@@ -158,25 +223,36 @@ namespace ThreeInRow.Back
                 return false;
             }
 
-            if (verticalMatchedPoints.Count == 2 && horizontalMatchedPoints.Count == 2)
-            {
-                figure.BonusCommand = _horizontalDestroyerBonusCreator.CreateBonus(); // TODO create bomb
-            }
-            else if (horizontalMatchedPoints.Count == 3)
-            {
-                figure.BonusCommand = _verticalDestroyerBonusCreator.CreateBonus();
-            }
-            else if (verticalMatchedPoints.Count == 3)
-            {
-                figure.BonusCommand = _horizontalDestroyerBonusCreator.CreateBonus();
-            }
-            else if (horizontalMatchedPoints.Count == 4 || verticalMatchedPoints.Count == 4)
-            {
-                figure.BonusCommand = _horizontalDestroyerBonusCreator.CreateBonus(); // TODO create bomb
-            }
+            if (isBonusSeted) return true;
 
             DestroyElement(element);
             return true;
+        }
+
+        private bool ChekAndCreateBonus(int horizontalMatchedCount, int verticalMatchedCount, Figure figure)
+        {
+            if (horizontalMatchedCount >= 4 || verticalMatchedCount >= 4)
+            {
+                figure.Bonus = _bombDestroyerBonusCreator.CreateBonus();
+                return true;
+            }
+            else if (verticalMatchedCount >= 2 && horizontalMatchedCount >= 2)
+            {
+                figure.Bonus = _bombDestroyerBonusCreator.CreateBonus();
+                return true;
+            }
+            else if (horizontalMatchedCount == 3)
+            {
+                figure.Bonus = _verticalDestroyerBonusCreator.CreateBonus();
+                return true;
+            }
+            else if (verticalMatchedCount == 3)
+            {
+                figure.Bonus = _horizontalDestroyerBonusCreator.CreateBonus();
+                return true;
+            }
+
+            return false;
         }
 
         private void DestroyPointList(List<Point> points)
@@ -189,12 +265,16 @@ namespace ThreeInRow.Back
 
         public void DestroyElement(Point point)
         {
+            if (point.X < 0 || point.X >= columnsCount || point.Y < 0 || point.Y >= rowsCount) return;
+
             int points = 0;
-            if (_field[point.X, point.Y].HasBonus())
+            Figure figure = _field[point.X, point.Y];
+
+            if (figure.HasBonus())
             {
-                points += UseBonus(_field[point.X, point.Y].BonusCommand, point);
+                points += UseBonus(figure.ExtractBonus(), point);
             }
-            points += _field[point.X, point.Y].Destroy(point);
+            points += figure.Destroy();
 
             FigureDestroyed(points);
         }
@@ -222,7 +302,7 @@ namespace ThreeInRow.Back
             return matchedPoints;
         }
 
-        private int UseBonus(IBonusCommand bonus, Point point)
+        private int UseBonus(BaseBonus bonus, Point point)
         {
             return bonus.UseBonus(point, this);
         }

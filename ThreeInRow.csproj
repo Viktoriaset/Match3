@@ -46,18 +46,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Animator.cs" />
     <Compile Include="Domain\BonusCommand\BombBonusCommand.cs" />
+    <Compile Include="Domain\BonusFactory\BombBonusCreator.cs" />
     <Compile Include="Domain\BonusFactory\BonusCreator.cs" />
     <Compile Include="Domain\Figure.cs" />
-    <Compile Include="Domain\FigureCreator.cs" />
+    <Compile Include="Domain\FigureFactory\EmptyFigureCreator.cs" />
+    <Compile Include="Domain\FigureFactory\FigureCreator.cs" />
+    <Compile Include="Domain\FigureFallAnimator.cs" />
     <Compile Include="Domain\GameField.cs" />
     <Compile Include="Domain\BonusCommand\HorizontalDestroyerBonusCommand.cs" />
-    <Compile Include="Domain\BonusCommand\IBonusCommand.cs" />
+    <Compile Include="Domain\BonusCommand\BaseBonus.cs" />
     <Compile Include="Domain\BonusFactory\HorizontalDestroyerBonusCreator.cs" />
     <Compile Include="Domain\IFigureDestroyedObservable.cs" />
     <Compile Include="Domain\IFigureDestroyedObserver.cs" />
-    <Compile Include="Domain\RandomElementListExtension.cs" />
-    <Compile Include="Domain\RandomFigureCreator.cs" />
+    <Compile Include="Domain\Extensions\RandomElementListExtension.cs" />
+    <Compile Include="Domain\FigureFactory\RandomFigureCreator.cs" />
     <Compile Include="Domain\BonusCommand\VerticalDestroyerBonusCommand.cs" />
     <Compile Include="Domain\BonusFactory\VerticalDestroyerBonusCreator.cs" />
     <Compile Include="Domain\WinCondition.cs" />
