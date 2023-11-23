@@ -20,10 +20,6 @@ namespace ThreeInRow
             Init();
         }
 
-        public void Level1_Load(object Sender, System.EventArgs e)
-        {
-
-        }
 
         public void Init()
         {
@@ -98,6 +94,10 @@ namespace ThreeInRow
             y = y / size;
 
             gameField.SelectElement(x, y);
+        }
+
+        private void Level1_Load(object sender, EventArgs e)
+        {
         }
     }
 }

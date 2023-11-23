@@ -22,7 +22,12 @@ namespace ThreeInRow.Domain.BonusCommand
             return MemberwiseClone();
         }
 
-        public override int UseBonus(Point point, GameField gameField)
+        public override bool Draw(Graphics g)
+        {
+            return true;
+        }
+
+        public override int UseBonus(Point point, GameField gameField, Timer timer)
         {
             timer = new Timer();
             timer.Interval = 250;

@@ -35,10 +35,10 @@ namespace ThreeInRow.Back
         private BonusCreator _verticalDestroyerBonusCreator = new VerticalDestroyerBonusCreator();
         private BonusCreator _bombDestroyerBonusCreator = new BombBonusCreator();
 
-        private int _matrixDrawingStartPoint;
-        private int _figureCellSize;
+        public int _matrixDrawingStartPoint { get; private set; }
+        public int _figureCellSize { get; private set; }
         private Timer _gameTimer;
-
+        private List<BaseBonus> activeBonusList = new List<BaseBonus>();
 
         public GameField(int rowsCount,
                          int columnsCount,
@@ -407,6 +407,7 @@ namespace ThreeInRow.Back
 
         private int UseBonus(BaseBonus bonus, Point point)
         {
+            activeBonusList.Add(bonus);
             return bonus.UseBonus(point, this, _gameTimer);
         }
 
@@ -450,6 +451,14 @@ namespace ThreeInRow.Back
                 for (int j = 0; j < columnsCount; j++)
                 {
                     _field[i, j].Draw(g);
+                }
+            }
+
+            for(int i = 0; i < activeBonusList.Count; i++)
+            {
+                if (activeBonusList[i].Draw(g))
+                {
+                    activeBonusList.RemoveAt(i);
                 }
             }
         }
