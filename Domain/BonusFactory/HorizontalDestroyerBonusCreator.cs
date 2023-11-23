@@ -8,7 +8,7 @@ namespace ThreeInRow.Domain
 
         public HorizontalDestroyerBonusCreator()
         {
-            _horizontalDestroyer = new HorizontalDestroyerBonusCommand(Resource1.HorizontalDestroyer);
+            _horizontalDestroyer = new HorizontalDestroyerBonusCommand(Resource1.HorizontalDestroyer, 500);
         }
 
         public BaseBonus CreateBonus()

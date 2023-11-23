@@ -1,18 +1,57 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace ThreeInRow.Domain
 {
-    public abstract class Animator
+    public class Animator
     {
+        int bitmapIndex = 0;
         public List<Bitmap> spriteList = new List<Bitmap>();
-        public int maxAnimationTickOnAction;
-        public int animationTickCounter = 0;
+        public Bitmap staticBitmap;
+        private IHolderBitmap _holderBitmap;
+        private bool _isPlaing = false;
+        private Timer _timer;
 
-        public Animator(int maxAnimationTickOnAction)
+        public Animator(Bitmap bitmap, IHolderBitmap holderBitmap)
         {
-            this.maxAnimationTickOnAction = maxAnimationTickOnAction;
+            staticBitmap = bitmap;
+            _holderBitmap = holderBitmap;
         }
-        public abstract bool Play();
+
+        public void Start(Timer timer)
+        {
+            if (!_isPlaing)
+            {
+                _timer = timer;
+                _timer.Tick += Play;
+                _isPlaing = true;
+                return;
+            }
+        }
+
+        public void Play(object sender, EventArgs e)
+        {
+            _holderBitmap.SetBitmap(spriteList[bitmapIndex]);
+
+            bitmapIndex++;
+            if (bitmapIndex >= spriteList.Count)
+            {
+                bitmapIndex = 0;
+            }
+        }
+
+        public void Stop(IHolderBitmap bitmap)
+        {
+            if (_isPlaing)
+            {
+                bitmapIndex = 0;
+                bitmap.SetBitmap(staticBitmap);
+                _isPlaing = false;
+                _timer.Tick -= Play;
+            }
+            
+        }
     }
 }

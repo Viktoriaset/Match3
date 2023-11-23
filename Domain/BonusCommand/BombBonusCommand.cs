@@ -13,9 +13,8 @@ namespace ThreeInRow.Domain.BonusCommand
     {
         private Timer timer;
 
-        public BombBonusCommand(Bitmap bitmap) 
+        public BombBonusCommand(Bitmap bitmap, int points) : base(bitmap, points)
         {
-            this.bitmap = bitmap;
         }
 
         public override object Clone()

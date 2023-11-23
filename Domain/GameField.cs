@@ -24,6 +24,7 @@ namespace ThreeInRow.Back
         private FigureCreator _creator;
         private List<IFigureDestroyedObserver> figureDestroyedObservers
             = new List<IFigureDestroyedObserver>();
+
         private BonusCreator _horizontalDestroyerBonusCreator = new HorizontalDestroyerBonusCreator();
         private BonusCreator _verticalDestroyerBonusCreator = new VerticalDestroyerBonusCreator();
         private BonusCreator _bombDestroyerBonusCreator = new BombBonusCreator();
@@ -67,17 +68,6 @@ namespace ThreeInRow.Back
                 for (int j = 0; j < columnsCount; j++)
                 {
                     FindAndDestroyMatchingForElement(new Point(i, j));
-                }
-            }
-        }
-
-        public void DrawField(Graphics g)
-        {
-            for (int i = 0; i < rowsCount; i++)
-            {
-                for (int j = 0; j < columnsCount; j++)
-                {
-                    _field[i, j].Draw(g);
                 }
             }
         }
@@ -196,15 +186,22 @@ namespace ThreeInRow.Back
             bool isMathced = false;
             Figure figure = _field[element.X, element.Y];
 
+            if (element.Y < rowsCount - 1 && _field[element.X, element.Y + 1].Type == FigureType.Empty)
+            {
+                return false;
+            }
+
             List<Point> verticalMatchedPoints = FindMatchingInDirection(element.X, element.Y, _upDirection, figure);
             verticalMatchedPoints.AddRange(FindMatchingInDirection(element.X, element.Y, _douwnDirection, figure));
 
             List<Point> horizontalMatchedPoints = FindMatchingInDirection(element.X, element.Y, _leftDirection, figure);
             horizontalMatchedPoints.AddRange(FindMatchingInDirection(element.X, element.Y, _rightDirection, figure));
 
-            bool isBonusSeted = ChekAndCreateBonus(horizontalMatchedPoints.Count,
-                    verticalMatchedPoints.Count, figure
-                );
+            bool isBonusSeted = ChekAndCreateBonus(
+                horizontalMatchedPoints.Count,
+                verticalMatchedPoints.Count, 
+                figure
+            );
 
             if (1 + verticalMatchedPoints.Count > 2)
             {
@@ -265,7 +262,11 @@ namespace ThreeInRow.Back
 
         public void DestroyElement(Point point)
         {
-            if (point.X < 0 || point.X >= columnsCount || point.Y < 0 || point.Y >= rowsCount) return;
+            if (point.X < 0 || point.X >= columnsCount 
+                || point.Y < 0 || point.Y >= rowsCount)
+            {
+                return;
+            }  
 
             int points = 0;
             Figure figure = _field[point.X, point.Y];
@@ -277,6 +278,11 @@ namespace ThreeInRow.Back
             points += figure.Destroy();
 
             FigureDestroyed(points);
+        }
+
+        private int UseBonus(BaseBonus bonus, Point point)
+        {
+            return bonus.UseBonus(point, this);
         }
 
         private List<Point> FindMatchingInDirection(int x, int y, Direction direction, Figure figure)
@@ -302,11 +308,6 @@ namespace ThreeInRow.Back
             return matchedPoints;
         }
 
-        private int UseBonus(BaseBonus bonus, Point point)
-        {
-            return bonus.UseBonus(point, this);
-        }
-
         public Figure GetElement(int x, int y)
         {
             if (x >= 0 && y >= 0 && x < columnsCount && y < rowsCount)
@@ -315,6 +316,17 @@ namespace ThreeInRow.Back
             }
 
             return null;
+        }
+
+        public void DrawField(Graphics g)
+        {
+            for (int i = 0; i < rowsCount; i++)
+            {
+                for (int j = 0; j < columnsCount; j++)
+                {
+                    _field[i, j].Draw(g);
+                }
+            }
         }
 
         public void Subscribe(IFigureDestroyedObserver observer)

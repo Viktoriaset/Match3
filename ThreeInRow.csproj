@@ -47,13 +47,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Animator.cs" />
+    <Compile Include="Domain\AnimatorCreator.cs" />
     <Compile Include="Domain\BonusCommand\BombBonusCommand.cs" />
     <Compile Include="Domain\BonusFactory\BombBonusCreator.cs" />
     <Compile Include="Domain\BonusFactory\BonusCreator.cs" />
     <Compile Include="Domain\Figure.cs" />
     <Compile Include="Domain\FigureFactory\EmptyFigureCreator.cs" />
     <Compile Include="Domain\FigureFactory\FigureCreator.cs" />
-    <Compile Include="Domain\FigureFallAnimator.cs" />
     <Compile Include="Domain\GameField.cs" />
     <Compile Include="Domain\BonusCommand\HorizontalDestroyerBonusCommand.cs" />
     <Compile Include="Domain\BonusCommand\BaseBonus.cs" />
@@ -64,7 +64,9 @@
     <Compile Include="Domain\FigureFactory\RandomFigureCreator.cs" />
     <Compile Include="Domain\BonusCommand\VerticalDestroyerBonusCommand.cs" />
     <Compile Include="Domain\BonusFactory\VerticalDestroyerBonusCreator.cs" />
+    <Compile Include="Domain\IHolderBitmap.cs" />
     <Compile Include="Domain\WinCondition.cs" />
+    <Compile Include="Domain\WinConditionByTime.cs" />
     <Compile Include="Level1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,19 +119,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Star 1.png" />
+    <None Include="Resources\Star\Star 1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Polygon 1.png" />
+    <None Include="Resources\Tryangle\Tryangle.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Ellipse 1.png" />
+    <None Include="Resources\Circle\Circle.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Rectangle 1.png" />
+    <None Include="Resources\Rectangle\Rectangle 1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Hexogen.png" />
+    <None Include="Resources\Hexagon\Hexogen.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Image1.bmp" />
@@ -148,6 +150,67 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Bomp.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Rectangle\Rectangle 15_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Rectangle\Rectangle_30_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Rectangle\Rectangle_15_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Rectangle\Rectangle_30_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Star\Star_15_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Star\Star_30_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Star\Star_15_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Star\Star_30_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hexagon\Hexogen_15_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hexagon\Hexogen_30_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hexagon\Hexogen_15_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hexagon\Hexogen_30_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Circle\Circle_15_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Circle\Circle_30_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Circle\Circle_30_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Circle\Circle_15_right.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Tryangle\Tryangle_15_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tryangle\Tryangle_15_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tryangle\Tryangle_30_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tryangle\Tryangle_30_left.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -13,6 +13,7 @@ namespace ThreeInRow
         int size;
         int startPoint;
         Animator figureFallAnimator;
+        WinConditionByTime winCondition;
         public Level1()
         {
             InitializeComponent();
@@ -31,11 +32,23 @@ namespace ThreeInRow
             gameField = new GameField(8, 8, startPoint, size);
             gameField.FillRandomElements();
 
+            winCondition = new WinConditionByTime(points_label, 120000, game_timer);
+            gameField.Subscribe(winCondition);
+
             Invalidate();
         }
 
         public void Update(object sender, EventArgs e)
         {
+            if (winCondition.isGameFinished(timer1.Interval))
+            {
+                timer1.Stop();
+                DialogResult result = MessageBox.Show("Your points: " + winCondition.TotalPoints);
+                if (result == DialogResult.OK)
+                {
+                    Close();
+                }
+            }
             Invalidate();
         }
 

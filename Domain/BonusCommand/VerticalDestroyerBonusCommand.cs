@@ -10,9 +10,8 @@ namespace ThreeInRow.Domain.BonusCommand
 {
     internal class VerticalDestroyerBonusCommand : BaseBonus, ICloneable
     {
-        public VerticalDestroyerBonusCommand(Bitmap bitmap)
+        public VerticalDestroyerBonusCommand(Bitmap bitmap, int points) : base(bitmap, points)
         {
-            this.bitmap = bitmap;
         }
 
         public override object Clone()

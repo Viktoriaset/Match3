@@ -121,14 +121,38 @@
   <data name="Bomp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Bomp.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Ellipse_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Ellipse 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Circle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Circle\Circle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Circle_15_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Circle\Circle_15_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Circle_15_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Circle\Circle_15_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Circle_30_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Circle\Circle_30_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Circle_30_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Circle\Circle_30_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Empty.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Hexogen" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Hexogen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>Resources\Hexagon\Hexogen.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hexogen_15_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Hexagon\Hexogen_15_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hexogen_15_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Hexagon\Hexogen_15_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hexogen_30_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Hexagon\Hexogen_30_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hexogen_30_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Hexagon\Hexogen_30_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="HorizontalDestroyer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Arrow 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -136,14 +160,50 @@
   <data name="Image1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Image1.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Polygon_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Polygon 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Rectangle_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Rectangle 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>Resources\Rectangle\Rectangle 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Rectangle_15_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Rectangle\Rectangle 15_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Rectangle_15_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Rectangle\Rectangle_15_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Rectangle_30_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Rectangle\Rectangle_30_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Rectangle_30_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Rectangle\Rectangle_30_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Star_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Resources\Star 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>Resources\Star\Star 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Star_15_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Star\Star_15_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Star_15_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Star\Star_15_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Star_30_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Star\Star_30_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Star_30_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Star\Star_30_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tryangle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Tryangle\Tryangle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tryangle_15_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Tryangle\Tryangle_15_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tryangle_15_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Tryangle\Tryangle_15_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tryangle_30_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Tryangle\Tryangle_30_left.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tryangle_30_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Tryangle\Tryangle_30_right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="VerticalDestroyer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Arrow 11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

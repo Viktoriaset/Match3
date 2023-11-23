@@ -4,15 +4,17 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ThreeInRow.Domain;
 using ThreeInRow.Domain.BonusCommand;
 
 namespace ThreeInRow.Back
 {
-    public class Figure : ICloneable
+    public class Figure : ICloneable, IHolderBitmap
     {
         private int _points;
         private Size _startSize;
         private Size _size;
+        public Animator FallAnimator;
         public BaseBonus Bonus;
         public Point position;
 
@@ -94,6 +96,11 @@ namespace ThreeInRow.Back
         public Size GetSize()
         {
             return _size;
+        }
+
+        public void SetBitmap(Bitmap bitmap)
+        {
+            Bitmap = bitmap;
         }
     }
 

@@ -13,7 +13,7 @@ namespace ThreeInRow.Domain.BonusFactory
 
         public BombBonusCreator()
         {
-            _bombBonusCommand = new BombBonusCommand(Resource1.Bomp);
+            _bombBonusCommand = new BombBonusCommand(Resource1.Bomp, 800);
         }
         public BaseBonus CreateBonus()
         {
