@@ -7,11 +7,11 @@ using ThreeInRow.Back;
 
 namespace ThreeInRow.Domain
 {
-    public class AnimatorCreator
+    public class FallAnimatorCreator
     {
         public Animator CreateAnimatorByFigure(Figure figure)
         {
-            Animator animator = new Animator(figure.Bitmap, figure);
+            Animator animator = new Animator(figure.Bitmap);
             switch (figure.Type)
             {
                 case FigureType.Square:

@@ -9,14 +9,19 @@ using ThreeInRow.Domain.BonusCommand;
 
 namespace ThreeInRow.Back
 {
-    public class Figure : ICloneable, IHolderBitmap
+    public class Figure : ICloneable
     {
         private int _points;
         private Size _startSize;
         private Size _size;
+
         public Animator FallAnimator;
+        public Animator SelectFigureAnimator;
         public BaseBonus Bonus;
         public Point position;
+        public bool IsFalling = false;
+        public bool IsSelected = false;
+        public bool IsDestroyd = false;
 
         public FigureType Type { get; private set; }
         public Bitmap Bitmap { get;  set; }
@@ -34,10 +39,22 @@ namespace ThreeInRow.Back
         {
             if (Type == FigureType.Empty) return;
 
-            Rectangle rectangle = new Rectangle(position.X, position.Y, _size.Width, _size.Height);
-            g.DrawImage(Bitmap, rectangle);
+            if (IsFalling)
+            {
+                FallAnimator.DrawNextSprite(position, g, _size);
+            }
+            else if (IsSelected)
+            {
+                SelectFigureAnimator.DrawNextSprite(position, g, _size);
+            }
+            else
+            {
+                FallAnimator.DrawStaticBitmap(position, g, _size);
+            }
+
             if (HasBonus())
             {
+                Rectangle rectangle = new Rectangle(position.X, position.Y, _size.Width, _size.Height);
                 g.DrawImage(Bonus.bitmap, rectangle);
             }
         }
@@ -47,17 +64,6 @@ namespace ThreeInRow.Back
             BaseBonus bonus = Bonus;
             Bonus = null;
             return bonus;
-        }
-
-        public void Select()
-        {
-            _size.Width += (_size.Width * 20) / 100;
-            _size.Height += (_size.Height * 20) / 100;
-        }
-
-        public void UnSelect()
-        {
-            _size = _startSize;
         }
 
         public bool HasBonus()
@@ -78,7 +84,7 @@ namespace ThreeInRow.Back
 
         public object Clone()
         {
-            return new Figure(_points, Type, (Bitmap)Bitmap.Clone());
+            return MemberwiseClone();
         }
 
         public static bool operator ==(Figure a, Figure b)

@@ -29,10 +29,10 @@ namespace ThreeInRow
         {
             size = 60;
             startPoint = 160;
-            gameField = new GameField(8, 8, startPoint, size);
+            gameField = new GameField(8, 8, startPoint, size, timer1);
             gameField.FillRandomElements();
 
-            winCondition = new WinConditionByTime(points_label, 120000, game_timer);
+            winCondition = new WinConditionByTime(points_label, 60000, game_timer);
             gameField.Subscribe(winCondition);
 
             Invalidate();

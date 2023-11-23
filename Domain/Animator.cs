@@ -5,35 +5,21 @@ using System.Windows.Forms;
 
 namespace ThreeInRow.Domain
 {
-    public class Animator
+    public class Animator: ICloneable
     {
         int bitmapIndex = 0;
         public List<Bitmap> spriteList = new List<Bitmap>();
         public Bitmap staticBitmap;
-        private IHolderBitmap _holderBitmap;
-        private bool _isPlaing = false;
-        private Timer _timer;
 
-        public Animator(Bitmap bitmap, IHolderBitmap holderBitmap)
+        public Animator(Bitmap bitmap)
         {
             staticBitmap = bitmap;
-            _holderBitmap = holderBitmap;
         }
 
-        public void Start(Timer timer)
+        public void DrawNextSprite(Point position, Graphics g, Size size)
         {
-            if (!_isPlaing)
-            {
-                _timer = timer;
-                _timer.Tick += Play;
-                _isPlaing = true;
-                return;
-            }
-        }
-
-        public void Play(object sender, EventArgs e)
-        {
-            _holderBitmap.SetBitmap(spriteList[bitmapIndex]);
+            Rectangle rectangle = new Rectangle(position.X, position.Y, size.Width, size.Height);
+            g.DrawImage(spriteList[bitmapIndex], rectangle);
 
             bitmapIndex++;
             if (bitmapIndex >= spriteList.Count)
@@ -42,16 +28,16 @@ namespace ThreeInRow.Domain
             }
         }
 
-        public void Stop(IHolderBitmap bitmap)
+        public void DrawStaticBitmap(Point position, Graphics g, Size size)
         {
-            if (_isPlaing)
-            {
-                bitmapIndex = 0;
-                bitmap.SetBitmap(staticBitmap);
-                _isPlaing = false;
-                _timer.Tick -= Play;
-            }
-            
+            Rectangle rectangle = new Rectangle(position.X, position.Y, size.Width, size.Height);
+            g.DrawImage(staticBitmap, rectangle);
+
+        }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }
