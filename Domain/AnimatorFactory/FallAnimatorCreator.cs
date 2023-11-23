@@ -11,7 +11,7 @@ namespace ThreeInRow.Domain
     {
         public Animator CreateAnimatorByFigure(Figure figure)
         {
-            Animator animator = new Animator(figure.Bitmap);
+            Animator animator = new Animator(figure.Bitmap, true);
             switch (figure.Type)
             {
                 case FigureType.Square:

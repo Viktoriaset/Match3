@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using ThreeInRow.Domain;
@@ -17,6 +18,7 @@ namespace ThreeInRow.Back
 
         public Animator FallAnimator;
         public Animator SelectFigureAnimator;
+        public Animator DestroyFigureAnimator;
         public BaseBonus Bonus;
         public Point position;
         public bool IsFalling = false;
@@ -42,6 +44,15 @@ namespace ThreeInRow.Back
             if (IsFalling)
             {
                 FallAnimator.DrawNextSprite(position, g, _size);
+            }
+            else if (IsDestroyd)
+            {
+                if (DestroyFigureAnimator.DrawNextSprite(position, g, _size))
+                {
+                    Bitmap = Resource1.Image1;
+                    Type = FigureType.Empty;
+                    IsDestroyd = false;
+                }
             }
             else if (IsSelected)
             {
@@ -74,9 +85,9 @@ namespace ThreeInRow.Back
         public int Destroy()
         {
             if (Type == FigureType.Empty) return 0;
+            if (IsDestroyd) return 0;
 
-            Bitmap = Resource1.Image1;
-            Type = FigureType.Empty;
+            IsDestroyd = true;
             Bonus = null;
 
             return _points;
@@ -84,7 +95,12 @@ namespace ThreeInRow.Back
 
         public object Clone()
         {
-            return MemberwiseClone();
+            Figure figure = new Figure(_points, Type, (Bitmap)Bitmap.Clone());
+            figure.FallAnimator = (Animator)FallAnimator.Clone();
+            figure.DestroyFigureAnimator = (Animator)DestroyFigureAnimator.Clone();
+            figure.SelectFigureAnimator = (Animator)SelectFigureAnimator.Clone();
+
+            return figure;
         }
 
         public static bool operator ==(Figure a, Figure b)

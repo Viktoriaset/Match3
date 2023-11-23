@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\Animator.cs" />
+    <Compile Include="Domain\AnimatorFactory\DestroyFigureCreator.cs" />
     <Compile Include="Domain\AnimatorFactory\FallAnimatorCreator.cs" />
     <Compile Include="Domain\AnimatorFactory\SelectFigureAnimatorCreator.cs" />
     <Compile Include="Domain\BonusCommand\BombBonusCommand.cs" />
@@ -225,6 +226,66 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Star\SelectedPentagon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Circle\Circle_destroy_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Circle\Circle_destroy_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Circle\Circle_destroy_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Circle\Circle_destroy_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hexagon\Hexogen_destroy_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hexagon\Hexogen_destroy_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hexagon\Hexogen_destroy_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Hexagon\Hexogen_destroy_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Rectangle\Rectangle_destroy_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Rectangle\Rectangle_destroy_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Rectangle\Rectangle_destroy_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Rectangle\Rectangle_destroy_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Star\Pentagon_destroy_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Star\Pentagon_destroy_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Star\Pentagon_destroy_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Star\Pentagon_destroy_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tryangle\Tryangle_destroy_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tryangle\Tryangle_destroy_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tryangle\Tryangle_destroy_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tryangle\Tryangle_destroy_4.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

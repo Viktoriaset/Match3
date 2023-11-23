@@ -391,6 +391,11 @@ namespace ThreeInRow.Back
             int points = 0;
             Figure figure = _field[point.X, point.Y];
 
+            if (figure.IsDestroyd)
+            {
+                return;
+            }
+
             if (figure.HasBonus())
             {
                 points += UseBonus(figure.ExtractBonus(), point);
@@ -402,7 +407,7 @@ namespace ThreeInRow.Back
 
         private int UseBonus(BaseBonus bonus, Point point)
         {
-            return bonus.UseBonus(point, this);
+            return bonus.UseBonus(point, this, _gameTimer);
         }
 
         private List<Point> FindMatchingInDirection(int x, int y, Direction direction, Figure figure)
@@ -413,7 +418,7 @@ namespace ThreeInRow.Back
 
             while (x >= 0 && x < columnsCount && y >= 0 && y < rowsCount)
             {
-                if (figure == _field[x, y] && !_field[x, y].IsFalling)
+                if (figure == _field[x, y] && !_field[x, y].IsFalling && !_field[x, y].IsDestroyd)
                 {
                     matchedPoints.Add(new Point(x, y));
                     x += direction.x;

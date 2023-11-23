@@ -123,6 +123,46 @@ namespace ThreeInRow {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Circle_destroy_1 {
+            get {
+                object obj = ResourceManager.GetObject("Circle_destroy_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Circle_destroy_2 {
+            get {
+                object obj = ResourceManager.GetObject("Circle_destroy_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Circle_destroy_3 {
+            get {
+                object obj = ResourceManager.GetObject("Circle_destroy_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Circle_destroy_4 {
+            get {
+                object obj = ResourceManager.GetObject("Circle_destroy_4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Empty {
             get {
                 object obj = ResourceManager.GetObject("Empty", resourceCulture);
@@ -183,6 +223,46 @@ namespace ThreeInRow {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Hexogen_destroy_1 {
+            get {
+                object obj = ResourceManager.GetObject("Hexogen_destroy_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Hexogen_destroy_2 {
+            get {
+                object obj = ResourceManager.GetObject("Hexogen_destroy_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Hexogen_destroy_3 {
+            get {
+                object obj = ResourceManager.GetObject("Hexogen_destroy_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Hexogen_destroy_4 {
+            get {
+                object obj = ResourceManager.GetObject("Hexogen_destroy_4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap HorizontalDestroyer {
             get {
                 object obj = ResourceManager.GetObject("HorizontalDestroyer", resourceCulture);
@@ -196,6 +276,46 @@ namespace ThreeInRow {
         internal static System.Drawing.Bitmap Image1 {
             get {
                 object obj = ResourceManager.GetObject("Image1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pentagon_destroy_1 {
+            get {
+                object obj = ResourceManager.GetObject("Pentagon_destroy_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pentagon_destroy_2 {
+            get {
+                object obj = ResourceManager.GetObject("Pentagon_destroy_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pentagon_destroy_3 {
+            get {
+                object obj = ResourceManager.GetObject("Pentagon_destroy_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Pentagon_destroy_4 {
+            get {
+                object obj = ResourceManager.GetObject("Pentagon_destroy_4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -246,6 +366,46 @@ namespace ThreeInRow {
         internal static System.Drawing.Bitmap Rectangle_30_right {
             get {
                 object obj = ResourceManager.GetObject("Rectangle_30_right", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Rectangle_destroy_1 {
+            get {
+                object obj = ResourceManager.GetObject("Rectangle_destroy_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Rectangle_destroy_2 {
+            get {
+                object obj = ResourceManager.GetObject("Rectangle_destroy_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Rectangle_destroy_3 {
+            get {
+                object obj = ResourceManager.GetObject("Rectangle_destroy_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Rectangle_destroy_4 {
+            get {
+                object obj = ResourceManager.GetObject("Rectangle_destroy_4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -396,6 +556,46 @@ namespace ThreeInRow {
         internal static System.Drawing.Bitmap Tryangle_30_right {
             get {
                 object obj = ResourceManager.GetObject("Tryangle_30_right", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tryangle_destroy_1 {
+            get {
+                object obj = ResourceManager.GetObject("Tryangle_destroy_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tryangle_destroy_2 {
+            get {
+                object obj = ResourceManager.GetObject("Tryangle_destroy_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tryangle_destroy_3 {
+            get {
+                object obj = ResourceManager.GetObject("Tryangle_destroy_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Tryangle_destroy_4 {
+            get {
+                object obj = ResourceManager.GetObject("Tryangle_destroy_4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
