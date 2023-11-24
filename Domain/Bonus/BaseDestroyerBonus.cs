@@ -27,12 +27,13 @@ namespace ThreeInRow.Domain.BonusCommand
 
         public override int UseBonus(Point point, GameField gameFieldSet, Timer timer)
         {
+            gameField = gameFieldSet;
+
             Figure figure = gameField.GetElement(point.X, point.Y);
             positionFirstDestroyr = new Point(figure.Position.X, figure.Position.Y);
             positionSecondDestroyr = new Point(figure.Position.X, figure.Position.Y);
 
             startCoordinate = new Point(point.X, point.Y);
-            gameField = gameFieldSet;
 
             return points;
         }

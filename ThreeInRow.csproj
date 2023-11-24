@@ -151,9 +151,6 @@
     <None Include="Resources\Arrow 11.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Bomp.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Rectangle\Rectangle 15_left.png" />
   </ItemGroup>
   <ItemGroup>
@@ -289,16 +286,19 @@
     <None Include="Resources\Tryangle\Tryangle_destroy_4.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\destroyer_douwn.png" />
+    <None Include="Resources\Destroyer\destroyer_douwn.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\destroyer_up.png" />
+    <None Include="Resources\Destroyer\destroyer_up.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\destroyer_right.png" />
+    <None Include="Resources\Destroyer\destroyer_right.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\destroyer_left.png" />
+    <None Include="Resources\Destroyer\destroyer_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Bomp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
