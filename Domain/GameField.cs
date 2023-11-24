@@ -13,10 +13,11 @@ namespace ThreeInRow.Back
     {
         public int rowsCount { get; }
         public int columnsCount { get; }
-        public int _matrixDrawingStartPoint { get; private set; }
-        public int _figureCellSize { get; private set; }
+        public int MatrixDrawingStartPoint { get; private set; }
+        public int FigureCellSize { get; private set; }
 
         private Figure[,] _field;
+
         private Point _firstSelectedElement = new Point(-1, -1);
         private Point _firstSwapPosition = new Point(-1, -1);
         private Point _secondSelectedElement = new Point(-1, -1);
@@ -29,15 +30,16 @@ namespace ThreeInRow.Back
         private Direction _upDirection = new Direction(0, 1);
         private Direction _douwnDirection = new Direction(0, -1);
 
-        private FigureCreator _creator;
+        private Timer _gameTimer;
+        private List<BaseBonus> _activeBonusList = new List<BaseBonus>();
+
         private List<IFigureDestroyedObserver> _figureDestroyedObservers
             = new List<IFigureDestroyedObserver>();
 
+        private FigureCreator _creator;
         private IBonusCreator _horizontalDestroyerBonusCreator = new HorizontalDestroyerBonusCreator();
         private IBonusCreator _verticalDestroyerBonusCreator = new VerticalDestroyerBonusCreator();
         private IBonusCreator _bombDestroyerBonusCreator = new BombBonusCreator();
-        private Timer _gameTimer;
-        private List<BaseBonus> _activeBonusList = new List<BaseBonus>();
 
         public GameField(int rowsCountSet,
                          int columnsCountSet,
@@ -49,12 +51,12 @@ namespace ThreeInRow.Back
             columnsCount = columnsCountSet;
             _field = new Figure[rowsCountSet, columnsCountSet];
             _creator = new RandomFigureCreator();
-            _matrixDrawingStartPoint = matrixDrawingStartPoint;
-            _figureCellSize = figureCellSize;
+            MatrixDrawingStartPoint = matrixDrawingStartPoint;
+            FigureCellSize = figureCellSize;
             _gameTimer = timer;
         }
 
-        public void FillFieldRandomElements()
+        public void FillFieldEmptyElements()
         {
             EmptyFigureCreator figureCreator = new EmptyFigureCreator();
             for (int i = 0; i < rowsCount; i++)
@@ -63,8 +65,8 @@ namespace ThreeInRow.Back
                 {
                     Figure figure = figureCreator.CreateFigure();
                     figure.Position = new Point(
-                        _matrixDrawingStartPoint + i * _figureCellSize,
-                        _matrixDrawingStartPoint + j * _figureCellSize
+                        MatrixDrawingStartPoint + i * FigureCellSize,
+                        MatrixDrawingStartPoint + j * FigureCellSize
                         );
 
                     _field[i, j] = figure;
@@ -82,16 +84,17 @@ namespace ThreeInRow.Back
                 {
                     if (_field[j, i + 1].Type == FigureType.Empty && _field[j, i].Type != FigureType.Empty)
                     {
+                        _field[j, i].IsFalling = true;
+
                         if (_field[j, i].Position.Y < _field[j, i + 1].Position.Y)
                         {
-                            _field[j, i].IsFalling = true;
                             _field[j, i].Position.Y += 10;
                         }
                         else
                         {
                             _field[j, i].Position = new Point(
-                                _matrixDrawingStartPoint + j * _figureCellSize,
-                                _matrixDrawingStartPoint + i * _figureCellSize
+                                MatrixDrawingStartPoint + j * FigureCellSize,
+                                MatrixDrawingStartPoint + i * FigureCellSize
                                 );
 
                             Figure figure = _field[j, i + 1];
@@ -124,9 +127,10 @@ namespace ThreeInRow.Back
                 {
                     Figure figure = _creator.CreateFigure();
                     figure.Position = new Point(
-                        _matrixDrawingStartPoint + j * _figureCellSize,
-                        _matrixDrawingStartPoint
+                        MatrixDrawingStartPoint + j * FigureCellSize,
+                        MatrixDrawingStartPoint
                         );
+                    figure.IsFalling = true;
 
                     _field[j, 0] = figure;
                 }
@@ -146,12 +150,12 @@ namespace ThreeInRow.Back
             {
                 for (int j = 0; j < columnsCount; j++)
                 {
-                    FindAndDestroyMatchingForElement(new Point(i, j));
+                    FindAndDestroyMatchingFromElement(new Point(i, j));
                 }
             }
         }
 
-        public bool FindAndDestroyMatchingForElement(Point element)
+        public bool FindAndDestroyMatchingFromElement(Point element)
         {
             bool isMathced = false;
             Figure figure = _field[element.X, element.Y];
@@ -161,13 +165,13 @@ namespace ThreeInRow.Back
                 return false;
             }
 
-            List<Point> verticalMatchedPoints = FindMatchingInDirection(element.X, element.Y, _upDirection, figure);
-            verticalMatchedPoints.AddRange(FindMatchingInDirection(element.X, element.Y, _douwnDirection, figure));
+            List<Point> verticalMatchedPoints = FindMatchingOnDirection(element.X, element.Y, _upDirection, figure);
+            verticalMatchedPoints.AddRange(FindMatchingOnDirection(element.X, element.Y, _douwnDirection, figure));
 
-            List<Point> horizontalMatchedPoints = FindMatchingInDirection(element.X, element.Y, _leftDirection, figure);
-            horizontalMatchedPoints.AddRange(FindMatchingInDirection(element.X, element.Y, _rightDirection, figure));
+            List<Point> horizontalMatchedPoints = FindMatchingOnDirection(element.X, element.Y, _leftDirection, figure);
+            horizontalMatchedPoints.AddRange(FindMatchingOnDirection(element.X, element.Y, _rightDirection, figure));
 
-            bool isBonusSeted = ChekAndCreateBonus(
+            bool isBonusSeted = CheckAndCreateBonus(
                 horizontalMatchedPoints.Count,
                 verticalMatchedPoints.Count,
                 figure
@@ -196,7 +200,7 @@ namespace ThreeInRow.Back
             return true;
         }
 
-        private List<Point> FindMatchingInDirection(int x, int y, Direction direction, Figure figure)
+        private List<Point> FindMatchingOnDirection(int x, int y, Direction direction, Figure figure)
         {
             List<Point> matchedPoints = new List<Point>();
             x += direction.x;
@@ -219,7 +223,7 @@ namespace ThreeInRow.Back
             return matchedPoints;
         }
 
-        private bool ChekAndCreateBonus(int horizontalMatchedCount, int verticalMatchedCount, Figure figure)
+        private bool CheckAndCreateBonus(int horizontalMatchedCount, int verticalMatchedCount, Figure figure)
         {
             if (horizontalMatchedCount >= 4 || verticalMatchedCount >= 4)
             {
@@ -314,7 +318,7 @@ namespace ThreeInRow.Back
             Figure firstSelectedFigure = _field[_firstSelectedElement.X, _firstSelectedElement.Y];
             Figure secondSelectedFigure = _field[_secondSelectedElement.X, _secondSelectedElement.Y];
 
-            _firstSwapPosition 
+            _firstSwapPosition
                 = new Point(secondSelectedFigure.Position.X, secondSelectedFigure.Position.Y);
 
             _secondSwapPosition
@@ -359,8 +363,8 @@ namespace ThreeInRow.Back
                 return;
             }
 
-            if (!FindAndDestroyMatchingForElement(_firstSelectedElement)
-                && !FindAndDestroyMatchingForElement(_secondSelectedElement))
+            if (!FindAndDestroyMatchingFromElement(_firstSelectedElement)
+                && !FindAndDestroyMatchingFromElement(_secondSelectedElement))
             {
                 _isReturnSwap = true;
                 return;
@@ -459,7 +463,7 @@ namespace ThreeInRow.Back
                 }
             }
 
-            for(int i = 0; i < _activeBonusList.Count; i++)
+            for (int i = 0; i < _activeBonusList.Count; i++)
             {
                 if (_activeBonusList[i].Draw(g))
                 {

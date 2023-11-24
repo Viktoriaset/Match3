@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ThreeInRow.Back;
 
@@ -31,14 +27,15 @@ namespace ThreeInRow.Domain.BonusCommand
         {
             _timer = new Timer();
             _timer.Interval = 250;
-            _timer.Tick += (sender, e) => { 
+            _timer.Tick += (sender, e) =>
+            {
                 _timer.Stop();
-                Explousion(point, gameField); 
+                Explousion(point, gameField);
             };
 
             _timer.Start();
 
-            return points; 
+            return points;
         }
 
         private void Explousion(Point point, GameField gameField)

@@ -25,7 +25,7 @@ namespace ThreeInRow
             size = 60;
             startPoint = 160;
             gameField = new GameField(8, 8, startPoint, size, timer1);
-            gameField.FillFieldRandomElements();
+            gameField.FillFieldEmptyElements();
 
             winCondition = new WinConditionByTime(points_label, 60000, game_timer);
             gameField.Subscribe(winCondition);

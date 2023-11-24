@@ -5,7 +5,7 @@ using ThreeInRow.Back;
 
 namespace ThreeInRow.Domain.BonusCommand
 {
-    public abstract class BaseBonus: ICloneable
+    public abstract class BaseBonus : ICloneable
     {
         public Bitmap Bitmap;
         protected int points;
@@ -17,7 +17,7 @@ namespace ThreeInRow.Domain.BonusCommand
         }
 
         public abstract object Clone();
-    
+
         public abstract int UseBonus(Point point, GameField gameFieldSet, Timer timer);
 
         public abstract bool Draw(Graphics g);

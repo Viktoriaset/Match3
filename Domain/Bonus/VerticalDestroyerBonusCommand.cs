@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
-using ThreeInRow.Back;
 
 namespace ThreeInRow.Domain.BonusCommand
 {
@@ -22,9 +20,9 @@ namespace ThreeInRow.Domain.BonusCommand
 
         public override bool Draw(Graphics g)
         {
-            int douwnBorder = gameField._matrixDrawingStartPoint + gameField.rowsCount * gameField._figureCellSize;
+            int douwnBorder = gameField.MatrixDrawingStartPoint + gameField.rowsCount * gameField.FigureCellSize;
 
-            if (positionFirstDestroyr.Y <= gameField._matrixDrawingStartPoint
+            if (positionFirstDestroyr.Y <= gameField.MatrixDrawingStartPoint
                 && positionSecondDestroyr.Y >= douwnBorder)
             {
                 return true;

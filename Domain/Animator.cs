@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace ThreeInRow.Domain
 {
-    public class Animator: ICloneable
+    public class Animator : ICloneable
     {
         public List<Bitmap> SpriteList = new List<Bitmap>();
         public Bitmap StaticBitmap;
@@ -35,7 +34,7 @@ namespace ThreeInRow.Domain
             g.DrawImage(SpriteList[_bitmapIndex], rectangle);
 
             _bitmapIndex++;
-            
+
             return false;
         }
 

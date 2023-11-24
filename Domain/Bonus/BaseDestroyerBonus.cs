@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using ThreeInRow.Back;
 
@@ -43,8 +42,8 @@ namespace ThreeInRow.Domain.BonusCommand
             Rectangle rectangle = new Rectangle(
                 position.X,
                 position.Y,
-                gameField._figureCellSize,
-                gameField._figureCellSize
+                gameField.FigureCellSize,
+                gameField.FigureCellSize
             );
             g.DrawImage(bitmap, rectangle);
         }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
-using ThreeInRow.Back;
 
 namespace ThreeInRow.Domain.BonusCommand
 {
@@ -23,9 +21,9 @@ namespace ThreeInRow.Domain.BonusCommand
         public override bool Draw(Graphics g)
         {
 
-            int rightBorder = gameField._matrixDrawingStartPoint + gameField.rowsCount * gameField._figureCellSize;
+            int rightBorder = gameField.MatrixDrawingStartPoint + gameField.rowsCount * gameField.FigureCellSize;
 
-            if (positionFirstDestroyr.X < gameField._matrixDrawingStartPoint
+            if (positionFirstDestroyr.X < gameField.MatrixDrawingStartPoint
                 && positionSecondDestroyr.X > rightBorder)
             {
                 return true;
