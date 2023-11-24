@@ -17,6 +17,7 @@ namespace ThreeInRow.Domain
         {
             _pointsLable = pointsLable;
         }
+
         public void FigureDestroyed(int points)
         {
             TotalPoints += points;

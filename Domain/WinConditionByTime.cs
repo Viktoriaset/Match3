@@ -10,8 +10,8 @@ namespace ThreeInRow.Domain
 {
     internal class WinConditionByTime : WinCondition
     {
-        TimeSpan _time;
-        Label _timerLabel;
+        private TimeSpan _time;
+        private Label _timerLabel;
         public WinConditionByTime(Label pointsLable, int millesecondsTime, Label timerLabel)
             : base(pointsLable)
         {
@@ -19,14 +19,16 @@ namespace ThreeInRow.Domain
             _timerLabel = timerLabel;
         }
 
-        public bool isGameFinished(int timeInterval)
+        public bool IsGameFinished(int timeInterval)
         {
             if (_time.TotalMilliseconds > 0)
             {
                 _time -= TimeSpan.FromMilliseconds(timeInterval);
                 _timerLabel.Text = _time.ToString(@"mm\:ss");
+
                 return false;
             }
+
             return true;
         }
     }

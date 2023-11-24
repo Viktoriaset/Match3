@@ -53,7 +53,7 @@
     <Compile Include="Domain\Bonus\BaseDestroyerBonus.cs" />
     <Compile Include="Domain\Bonus\BombBonusCommand.cs" />
     <Compile Include="Domain\BonusFactory\BombBonusCreator.cs" />
-    <Compile Include="Domain\BonusFactory\BonusCreator.cs" />
+    <Compile Include="Domain\BonusFactory\IBonusCreator.cs" />
     <Compile Include="Domain\Figure.cs" />
     <Compile Include="Domain\FigureFactory\EmptyFigureCreator.cs" />
     <Compile Include="Domain\FigureFactory\FigureCreator.cs" />

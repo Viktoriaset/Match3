@@ -7,42 +7,42 @@ namespace ThreeInRow.Domain
 {
     public class Animator: ICloneable
     {
-        int bitmapIndex = 0;
-        public List<Bitmap> spriteList = new List<Bitmap>();
-        public Bitmap staticBitmap;
+        public List<Bitmap> SpriteList = new List<Bitmap>();
+        public Bitmap StaticBitmap;
+
+        private int _bitmapIndex = 0;
         private bool _isEndloop;
 
         public Animator(Bitmap bitmap, bool isEndloop)
         {
-            staticBitmap = bitmap;
+            StaticBitmap = bitmap;
             _isEndloop = isEndloop;
         }
 
         // returns true when the animation has ended
         public bool DrawNextSprite(Point position, Graphics g, Size size)
         {
-            if (bitmapIndex >= spriteList.Count)
+            if (_bitmapIndex >= SpriteList.Count)
             {
                 if (!_isEndloop)
                 {
                     return true;
                 }
-                bitmapIndex = 0;
+                _bitmapIndex = 0;
             }
 
             Rectangle rectangle = new Rectangle(position.X, position.Y, size.Width, size.Height);
-            g.DrawImage(spriteList[bitmapIndex], rectangle);
+            g.DrawImage(SpriteList[_bitmapIndex], rectangle);
 
-            bitmapIndex++;
+            _bitmapIndex++;
             
-
             return false;
         }
 
         public void DrawStaticBitmap(Point position, Graphics g, Size size)
         {
             Rectangle rectangle = new Rectangle(position.X, position.Y, size.Width, size.Height);
-            g.DrawImage(staticBitmap, rectangle);
+            g.DrawImage(StaticBitmap, rectangle);
         }
 
         public object Clone()

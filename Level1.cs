@@ -12,7 +12,6 @@ namespace ThreeInRow
         GameField gameField;
         int size;
         int startPoint;
-        Animator figureFallAnimator;
         WinConditionByTime winCondition;
         public Level1()
         {
@@ -26,7 +25,7 @@ namespace ThreeInRow
             size = 60;
             startPoint = 160;
             gameField = new GameField(8, 8, startPoint, size, timer1);
-            gameField.FillRandomElements();
+            gameField.FillFieldRandomElements();
 
             winCondition = new WinConditionByTime(points_label, 60000, game_timer);
             gameField.Subscribe(winCondition);
@@ -36,7 +35,7 @@ namespace ThreeInRow
 
         public void Update(object sender, EventArgs e)
         {
-            if (winCondition.isGameFinished(timer1.Interval))
+            if (winCondition.IsGameFinished(timer1.Interval))
             {
                 timer1.Stop();
                 DialogResult result = MessageBox.Show("Your points: " + winCondition.TotalPoints);

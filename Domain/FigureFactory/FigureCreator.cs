@@ -6,18 +6,18 @@ namespace ThreeInRow.Back
 {
     internal abstract class FigureCreator
     {
-        protected List<Figure> _figurePrototypeList = new List<Figure>();
-        private FallAnimatorCreator animatorCreator = new FallAnimatorCreator();
-        private SelectFigureAnimatorCreator selectAnimatorCreator = new SelectFigureAnimatorCreator();
-        private DestroyFigureCreator destroyFigureCreator = new DestroyFigureCreator();
+        protected List<Figure> figurePrototypeList = new List<Figure>();
+        private FallAnimatorCreator _animatorCreator = new FallAnimatorCreator();
+        private SelectFigureAnimatorCreator _selectAnimatorCreator = new SelectFigureAnimatorCreator();
+        private DestroyFigureCreator _destroyFigureCreator = new DestroyFigureCreator();
 
         public FigureCreator()
         {
-            _figurePrototypeList.Add(CreateFigurePrototypeByType(FigureType.Pentagon));
-            _figurePrototypeList.Add(CreateFigurePrototypeByType(FigureType.Hexagon));
-            _figurePrototypeList.Add(CreateFigurePrototypeByType(FigureType.Triangle));
-            _figurePrototypeList.Add(CreateFigurePrototypeByType(FigureType.Square));
-            _figurePrototypeList.Add(CreateFigurePrototypeByType(FigureType.Circle));
+            figurePrototypeList.Add(CreateFigurePrototypeByType(FigureType.Pentagon));
+            figurePrototypeList.Add(CreateFigurePrototypeByType(FigureType.Hexagon));
+            figurePrototypeList.Add(CreateFigurePrototypeByType(FigureType.Triangle));
+            figurePrototypeList.Add(CreateFigurePrototypeByType(FigureType.Square));
+            figurePrototypeList.Add(CreateFigurePrototypeByType(FigureType.Circle));
         }
 
         private Figure CreateFigurePrototypeByType(FigureType type)
@@ -31,9 +31,11 @@ namespace ThreeInRow.Back
                         FigureType.Square,
                         Resource1.Rectangle_1
                     );
-                    square.FallAnimator = animatorCreator.CreateAnimatorByFigure(square);
-                    square.SelectFigureAnimator = selectAnimatorCreator.CreateAnimatorByFigure(square);
-                    square.DestroyFigureAnimator = destroyFigureCreator.CreateAnimatorByFigure(square);
+
+                    square.FallAnimator = _animatorCreator.CreateAnimatorByFigure(square);
+                    square.SelectFigureAnimator = _selectAnimatorCreator.CreateAnimatorByFigure(square);
+                    square.DestroyFigureAnimator = _destroyFigureCreator.CreateAnimatorByFigure(square);
+
                     return square;
 
                 case FigureType.Triangle:
@@ -42,9 +44,11 @@ namespace ThreeInRow.Back
                         FigureType.Triangle,
                         Resource1.Tryangle
                     );
-                    triangle.FallAnimator = animatorCreator.CreateAnimatorByFigure(triangle);
-                    triangle.SelectFigureAnimator = selectAnimatorCreator.CreateAnimatorByFigure(triangle);
-                    triangle.DestroyFigureAnimator = destroyFigureCreator.CreateAnimatorByFigure(triangle);
+
+                    triangle.FallAnimator = _animatorCreator.CreateAnimatorByFigure(triangle);
+                    triangle.SelectFigureAnimator = _selectAnimatorCreator.CreateAnimatorByFigure(triangle);
+                    triangle.DestroyFigureAnimator = _destroyFigureCreator.CreateAnimatorByFigure(triangle);
+
                     return triangle;
 
                 case FigureType.Circle:
@@ -53,9 +57,11 @@ namespace ThreeInRow.Back
                         FigureType.Circle,
                         Resource1.Circle
                     );
-                    circle.FallAnimator = animatorCreator.CreateAnimatorByFigure(circle);
-                    circle.SelectFigureAnimator = selectAnimatorCreator.CreateAnimatorByFigure(circle);
-                    circle.DestroyFigureAnimator = destroyFigureCreator.CreateAnimatorByFigure(circle);
+
+                    circle.FallAnimator = _animatorCreator.CreateAnimatorByFigure(circle);
+                    circle.SelectFigureAnimator = _selectAnimatorCreator.CreateAnimatorByFigure(circle);
+                    circle.DestroyFigureAnimator = _destroyFigureCreator.CreateAnimatorByFigure(circle);
+
                     return circle;
 
                 case FigureType.Pentagon:
@@ -64,9 +70,11 @@ namespace ThreeInRow.Back
                         FigureType.Pentagon,
                         Resource1.Star_1
                     );
-                    pentagon.FallAnimator = animatorCreator.CreateAnimatorByFigure(pentagon);
-                    pentagon.SelectFigureAnimator = selectAnimatorCreator.CreateAnimatorByFigure(pentagon);
-                    pentagon.DestroyFigureAnimator = destroyFigureCreator.CreateAnimatorByFigure(pentagon);
+
+                    pentagon.FallAnimator = _animatorCreator.CreateAnimatorByFigure(pentagon);
+                    pentagon.SelectFigureAnimator = _selectAnimatorCreator.CreateAnimatorByFigure(pentagon);
+                    pentagon.DestroyFigureAnimator = _destroyFigureCreator.CreateAnimatorByFigure(pentagon);
+
                     return pentagon;
 
                 case FigureType.Hexagon:
@@ -75,9 +83,11 @@ namespace ThreeInRow.Back
                         FigureType.Hexagon,
                         Resource1.Hexogen
                     );
-                    hexagon.FallAnimator = animatorCreator.CreateAnimatorByFigure(hexagon);
-                    hexagon.SelectFigureAnimator = selectAnimatorCreator.CreateAnimatorByFigure(hexagon);
-                    hexagon.DestroyFigureAnimator = destroyFigureCreator.CreateAnimatorByFigure(hexagon);
+
+                    hexagon.FallAnimator = _animatorCreator.CreateAnimatorByFigure(hexagon);
+                    hexagon.SelectFigureAnimator = _selectAnimatorCreator.CreateAnimatorByFigure(hexagon);
+                    hexagon.DestroyFigureAnimator = _destroyFigureCreator.CreateAnimatorByFigure(hexagon);
+
                     return hexagon;
                 default:
                     return null;

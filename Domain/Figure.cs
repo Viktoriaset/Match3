@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 using ThreeInRow.Domain;
 using ThreeInRow.Domain.BonusCommand;
 
@@ -12,21 +8,21 @@ namespace ThreeInRow.Back
 {
     public class Figure : ICloneable
     {
-        private int _points;
-        private Size _startSize;
-        private Size _size;
-
         public Animator FallAnimator;
         public Animator SelectFigureAnimator;
         public Animator DestroyFigureAnimator;
         public BaseBonus Bonus;
-        public Point position;
+        public Point Position;
         public bool IsFalling = false;
         public bool IsSelected = false;
         public bool IsDestroyd = false;
 
+        private int _points;
+        private Size _startSize;
+        private Size _size;
+
         public FigureType Type { get; private set; }
-        public Bitmap Bitmap { get;  set; }
+        public Bitmap Bitmap;
 
         public Figure(int points, FigureType type, Bitmap bitmap)
         {
@@ -43,11 +39,11 @@ namespace ThreeInRow.Back
 
             if (IsFalling)
             {
-                FallAnimator.DrawNextSprite(position, g, _size);
+                FallAnimator.DrawNextSprite(Position, g, _size);
             }
             else if (IsDestroyd)
             {
-                if (DestroyFigureAnimator.DrawNextSprite(position, g, _size))
+                if (DestroyFigureAnimator.DrawNextSprite(Position, g, _size))
                 {
                     Bitmap = Resource1.Image1;
                     Type = FigureType.Empty;
@@ -56,16 +52,16 @@ namespace ThreeInRow.Back
             }
             else if (IsSelected)
             {
-                SelectFigureAnimator.DrawNextSprite(position, g, _size);
+                SelectFigureAnimator.DrawNextSprite(Position, g, _size);
             }
             else
             {
-                FallAnimator.DrawStaticBitmap(position, g, _size);
+                FallAnimator.DrawStaticBitmap(Position, g, _size);
             }
 
             if (HasBonus())
             {
-                Rectangle rectangle = new Rectangle(position.X, position.Y, _size.Width, _size.Height);
+                Rectangle rectangle = new Rectangle(Position.X, Position.Y, _size.Width, _size.Height);
                 g.DrawImage(Bonus.Bitmap, rectangle);
             }
         }
@@ -74,6 +70,7 @@ namespace ThreeInRow.Back
         {
             BaseBonus bonus = Bonus;
             Bonus = null;
+
             return bonus;
         }
 
@@ -85,6 +82,7 @@ namespace ThreeInRow.Back
         public int Destroy()
         {
             if (Type == FigureType.Empty) return 0;
+
             if (IsDestroyd) return 0;
 
             IsDestroyd = true;
@@ -115,14 +113,11 @@ namespace ThreeInRow.Back
             return a.Type != b.Type;
         }
 
-        public Size GetSize()
+        public override bool Equals(object obj)
         {
-            return _size;
-        }
-
-        public void SetBitmap(Bitmap bitmap)
-        {
-            Bitmap = bitmap;
+            return obj is Figure figure &&
+                   EqualityComparer<Point>.Default.Equals(Position, figure.Position) &&
+                   Type == figure.Type;
         }
     }
 
@@ -132,7 +127,7 @@ namespace ThreeInRow.Back
         Square,
         Triangle,
         Pentagon,
-        Hexagon, 
+        Hexagon,
         Empty
     }
 }

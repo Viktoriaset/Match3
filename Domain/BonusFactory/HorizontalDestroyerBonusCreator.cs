@@ -2,13 +2,13 @@
 
 namespace ThreeInRow.Domain
 {
-    internal class HorizontalDestroyerBonusCreator : BonusCreator
+    internal class HorizontalDestroyerBonusCreator : IBonusCreator
     {
-        private HorizontalDestroyerBonusCommand _horizontalDestroyer;
+        private HorizontalDestroyerBonusCommand _horizontalDestroyerPrototype;
 
         public HorizontalDestroyerBonusCreator()
         {
-            _horizontalDestroyer = new HorizontalDestroyerBonusCommand(
+            _horizontalDestroyerPrototype = new HorizontalDestroyerBonusCommand(
                 Resource1.HorizontalDestroyer,
                 500,
                 Resource1.destroyer_left,
@@ -18,7 +18,7 @@ namespace ThreeInRow.Domain
 
         public BaseBonus CreateBonus()
         {
-            return (HorizontalDestroyerBonusCommand)_horizontalDestroyer.Clone();
+            return (HorizontalDestroyerBonusCommand)_horizontalDestroyerPrototype.Clone();
         }
     }
 }

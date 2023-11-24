@@ -2,13 +2,13 @@
 
 namespace ThreeInRow.Domain
 {
-    internal class VerticalDestroyerBonusCreator : BonusCreator
+    internal class VerticalDestroyerBonusCreator : IBonusCreator
     {
-        private VerticalDestroyerBonusCommand _verticalDestroyer;
+        private VerticalDestroyerBonusCommand _verticalDestroyerPrototype;
 
         public VerticalDestroyerBonusCreator()
         {
-            _verticalDestroyer = new VerticalDestroyerBonusCommand(
+            _verticalDestroyerPrototype = new VerticalDestroyerBonusCommand(
                 Resource1.VerticalDestroyer,
                 500,
                 Resource1.destroyer_up,
@@ -17,7 +17,7 @@ namespace ThreeInRow.Domain
         }
         public BaseBonus CreateBonus()
         {
-            return (VerticalDestroyerBonusCommand)_verticalDestroyer.Clone();
+            return (VerticalDestroyerBonusCommand)_verticalDestroyerPrototype.Clone();
         }
     }
 }

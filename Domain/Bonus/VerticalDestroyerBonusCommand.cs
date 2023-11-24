@@ -32,7 +32,7 @@ namespace ThreeInRow.Domain.BonusCommand
 
             for (int i = 0; i < startCoordinate.Y; i++)
             {
-                if (gameField.GetElement(startCoordinate.X, i).position.Y >= positionFirstDestroyr.Y)
+                if (gameField.GetElement(startCoordinate.X, i).Position.Y >= positionFirstDestroyr.Y)
                 {
                     gameField.DestroyElement(new Point(startCoordinate.X, i));
                 }
@@ -42,7 +42,7 @@ namespace ThreeInRow.Domain.BonusCommand
 
             for (int i = startCoordinate.Y + 1; i < gameField.rowsCount; i++)
             {
-                if (gameField.GetElement(startCoordinate.X, i).position.Y <= positionSecondDestroyr.Y)
+                if (gameField.GetElement(startCoordinate.X, i).Position.Y <= positionSecondDestroyr.Y)
                 {
                     gameField.DestroyElement(new Point(startCoordinate.X, i));
                 }
