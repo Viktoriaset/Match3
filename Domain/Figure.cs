@@ -66,7 +66,7 @@ namespace ThreeInRow.Back
             if (HasBonus())
             {
                 Rectangle rectangle = new Rectangle(position.X, position.Y, _size.Width, _size.Height);
-                g.DrawImage(Bonus.bitmap, rectangle);
+                g.DrawImage(Bonus.Bitmap, rectangle);
             }
         }
 

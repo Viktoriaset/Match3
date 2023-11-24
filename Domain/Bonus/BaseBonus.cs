@@ -7,18 +7,18 @@ namespace ThreeInRow.Domain.BonusCommand
 {
     public abstract class BaseBonus: ICloneable
     {
-        public Bitmap bitmap;
+        public Bitmap Bitmap;
         protected int points;
 
-        public BaseBonus(Bitmap bitmap, int points)
+        public BaseBonus(Bitmap bitmap, int pointsSet)
         {
-            this.bitmap = bitmap;
-            this.points = points;
+            Bitmap = bitmap;
+            this.points = pointsSet;
         }
 
         public abstract object Clone();
     
-        public abstract int UseBonus(Point point, GameField gameField, Timer timer);
+        public abstract int UseBonus(Point point, GameField gameFieldSet, Timer timer);
 
         public abstract bool Draw(Graphics g);
     }

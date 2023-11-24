@@ -11,7 +11,7 @@ namespace ThreeInRow.Domain.BonusCommand
 {
     internal class BombBonusCommand : BaseBonus, ICloneable
     {
-        private Timer timer;
+        private Timer _timer;
 
         public BombBonusCommand(Bitmap bitmap, int points) : base(bitmap, points)
         {
@@ -29,14 +29,14 @@ namespace ThreeInRow.Domain.BonusCommand
 
         public override int UseBonus(Point point, GameField gameField, Timer timer)
         {
-            timer = new Timer();
-            timer.Interval = 250;
-            timer.Tick += (sender, e) => { 
-                timer.Stop();
+            _timer = new Timer();
+            _timer.Interval = 250;
+            _timer.Tick += (sender, e) => { 
+                _timer.Stop();
                 Explousion(point, gameField); 
             };
 
-            timer.Start();
+            _timer.Start();
 
             return points; 
         }

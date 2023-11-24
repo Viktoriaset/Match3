@@ -50,21 +50,22 @@
     <Compile Include="Domain\AnimatorFactory\DestroyFigureCreator.cs" />
     <Compile Include="Domain\AnimatorFactory\FallAnimatorCreator.cs" />
     <Compile Include="Domain\AnimatorFactory\SelectFigureAnimatorCreator.cs" />
-    <Compile Include="Domain\BonusCommand\BombBonusCommand.cs" />
+    <Compile Include="Domain\Bonus\BaseDestroyerBonus.cs" />
+    <Compile Include="Domain\Bonus\BombBonusCommand.cs" />
     <Compile Include="Domain\BonusFactory\BombBonusCreator.cs" />
     <Compile Include="Domain\BonusFactory\BonusCreator.cs" />
     <Compile Include="Domain\Figure.cs" />
     <Compile Include="Domain\FigureFactory\EmptyFigureCreator.cs" />
     <Compile Include="Domain\FigureFactory\FigureCreator.cs" />
     <Compile Include="Domain\GameField.cs" />
-    <Compile Include="Domain\BonusCommand\HorizontalDestroyerBonusCommand.cs" />
-    <Compile Include="Domain\BonusCommand\BaseBonus.cs" />
+    <Compile Include="Domain\Bonus\HorizontalDestroyerBonusCommand.cs" />
+    <Compile Include="Domain\Bonus\BaseBonus.cs" />
     <Compile Include="Domain\BonusFactory\HorizontalDestroyerBonusCreator.cs" />
     <Compile Include="Domain\IFigureDestroyedObservable.cs" />
     <Compile Include="Domain\IFigureDestroyedObserver.cs" />
     <Compile Include="Domain\Extensions\RandomElementListExtension.cs" />
     <Compile Include="Domain\FigureFactory\RandomFigureCreator.cs" />
-    <Compile Include="Domain\BonusCommand\VerticalDestroyerBonusCommand.cs" />
+    <Compile Include="Domain\Bonus\VerticalDestroyerBonusCommand.cs" />
     <Compile Include="Domain\BonusFactory\VerticalDestroyerBonusCreator.cs" />
     <Compile Include="Domain\WinCondition.cs" />
     <Compile Include="Domain\WinConditionByTime.cs" />
@@ -286,6 +287,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Tryangle\Tryangle_destroy_4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\destroyer_douwn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\destroyer_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\destroyer_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\destroyer_left.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
