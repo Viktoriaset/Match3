@@ -1,24 +1,27 @@
-﻿using ThreeInRow.Domain.BonusCommand;
+﻿using ThreeInRow.Domain.Bonus;
+using ThreeInRow.Domain.BonusCommand;
 
 namespace ThreeInRow.Domain
 {
     internal class HorizontalDestroyerBonusCreator : IBonusCreator
     {
-        private HorizontalDestroyerBonusCommand _horizontalDestroyerPrototype;
+        private HorizontalDestroyersBonus _horizontalDestroyerPrototype;
 
         public HorizontalDestroyerBonusCreator()
         {
-            _horizontalDestroyerPrototype = new HorizontalDestroyerBonusCommand(
+            /*_horizontalDestroyerPrototype = new HorizontalDestroyerBonusCommand(
                 Resource1.HorizontalDestroyer,
                 500,
                 Resource1.destroyer_left,
                 Resource1.destroyer_right
-            );
+            );*/
+
+            _horizontalDestroyerPrototype = new HorizontalDestroyersBonus(Resource1.HorizontalDestroyer, 500);
         }
 
         public BaseBonus CreateBonus()
         {
-            return (HorizontalDestroyerBonusCommand)_horizontalDestroyerPrototype.Clone();
+            return (HorizontalDestroyersBonus)_horizontalDestroyerPrototype.Clone();
         }
     }
 }

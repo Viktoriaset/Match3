@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 using ThreeInRow.Domain;
 using ThreeInRow.Domain.BonusCommand;
 
 namespace ThreeInRow.Back
 {
-    public class Figure : ICloneable
+    public class Figure : IGameObject, ICloneable
     {
         public Animator FallAnimator;
         public Animator SelectFigureAnimator;
@@ -31,6 +32,16 @@ namespace ThreeInRow.Back
             Bitmap = bitmap;
             _startSize = new Size(60, 60);
             _size = _startSize;
+        }
+
+        public void Initialization()
+        {
+            
+        }
+
+        public void Update(object sender, PaintEventArgs e)
+        {
+            Draw(e.Graphics);
         }
 
         public void Draw(Graphics g)

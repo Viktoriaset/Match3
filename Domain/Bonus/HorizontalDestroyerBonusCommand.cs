@@ -20,7 +20,6 @@ namespace ThreeInRow.Domain.BonusCommand
 
         public override bool Draw(Graphics g)
         {
-
             int rightBorder = gameField.MatrixDrawingStartPoint + gameField.rowsCount * gameField.FigureCellSize;
 
             if (positionFirstDestroyr.X < gameField.MatrixDrawingStartPoint

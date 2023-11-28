@@ -13,7 +13,7 @@ namespace ThreeInRow.Domain.BonusCommand
         public BaseBonus(Bitmap bitmap, int pointsSet)
         {
             Bitmap = bitmap;
-            this.points = pointsSet;
+            points = pointsSet;
         }
 
         public abstract object Clone();

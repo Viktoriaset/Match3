@@ -54,6 +54,11 @@
     <Compile Include="Domain\Bonus\BombBonusCommand.cs" />
     <Compile Include="Domain\BonusFactory\BombBonusCreator.cs" />
     <Compile Include="Domain\BonusFactory\IBonusCreator.cs" />
+    <Compile Include="Domain\Bonus\HorizontalDestroyersBonus.cs" />
+    <Compile Include="Domain\Bonus\VerticalDestroyersBonus.cs" />
+    <Compile Include="Domain\Destroyer.cs" />
+    <Compile Include="Domain\DestroyerCreator.cs" />
+    <Compile Include="Domain\Extensions\PointCopyExtension.cs" />
     <Compile Include="Domain\Figure.cs" />
     <Compile Include="Domain\FigureFactory\EmptyFigureCreator.cs" />
     <Compile Include="Domain\FigureFactory\FigureCreator.cs" />
@@ -61,12 +66,15 @@
     <Compile Include="Domain\Bonus\HorizontalDestroyerBonusCommand.cs" />
     <Compile Include="Domain\Bonus\BaseBonus.cs" />
     <Compile Include="Domain\BonusFactory\HorizontalDestroyerBonusCreator.cs" />
+    <Compile Include="Domain\IGameObject.cs" />
     <Compile Include="Domain\IFigureDestroyedObservable.cs" />
     <Compile Include="Domain\IFigureDestroyedObserver.cs" />
     <Compile Include="Domain\Extensions\RandomElementListExtension.cs" />
     <Compile Include="Domain\FigureFactory\RandomFigureCreator.cs" />
     <Compile Include="Domain\Bonus\VerticalDestroyerBonusCommand.cs" />
     <Compile Include="Domain\BonusFactory\VerticalDestroyerBonusCreator.cs" />
+    <Compile Include="Domain\IScene.cs" />
+    <Compile Include="Domain\Utility.cs" />
     <Compile Include="Domain\WinCondition.cs" />
     <Compile Include="Domain\WinConditionByTime.cs" />
     <Compile Include="Level1.cs">

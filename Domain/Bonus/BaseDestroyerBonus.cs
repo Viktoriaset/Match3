@@ -1,6 +1,8 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using ThreeInRow.Back;
+using ThreeInRow.Domain.Extensions;
+using ThreeInRow;
 
 namespace ThreeInRow.Domain.BonusCommand
 {
@@ -29,8 +31,8 @@ namespace ThreeInRow.Domain.BonusCommand
             gameField = gameFieldSet;
 
             Figure figure = gameField.GetElement(point.X, point.Y);
-            positionFirstDestroyr = new Point(figure.Position.X, figure.Position.Y);
-            positionSecondDestroyr = new Point(figure.Position.X, figure.Position.Y);
+            positionFirstDestroyr = figure.Position.Copy();
+            positionSecondDestroyr = figure.Position.Copy();
 
             startCoordinate = new Point(point.X, point.Y);
 

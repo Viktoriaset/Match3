@@ -1,13 +1,14 @@
 ﻿
 using System;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using ThreeInRow.Back;
 using ThreeInRow.Domain;
 
 namespace ThreeInRow
 {
-    public partial class Level1 : Form
+    public partial class Level1 : Form, IScene
     {
         GameField gameField;
         int size;
@@ -18,7 +19,6 @@ namespace ThreeInRow
             InitializeComponent();
             Init();
         }
-
 
         public void Init()
         {
@@ -72,7 +72,6 @@ namespace ThreeInRow
         {
             e.Graphics.Clear(Color.White);
             gameField.MooveElementsDouwn();
-            gameField.DrawField(e.Graphics);
             DrawGrid(e.Graphics);
         }
 
@@ -85,7 +84,6 @@ namespace ThreeInRow
                 y < 0 || y >= size * gameField.rowsCount)
             {
                 gameField.UnSelectElement();
-                MessageBox.Show("X: " + x + " Y: " + y + "hight: " + size * gameField.columnsCount + "wight: " + size * gameField.rowsCount);
                 return;
             }
 
@@ -95,8 +93,19 @@ namespace ThreeInRow
             gameField.SelectElement(x, y);
         }
 
+        public void AddGameObject(IGameObject gameObject)
+        {
+            Paint += gameObject.Update;
+        }
+
+        public void DestroyGameObject(IGameObject gameObject)
+        {
+            Paint -= gameObject.Update;
+        }
+
         private void Level1_Load(object sender, EventArgs e)
         {
+            Utility.scene = this;
         }
     }
 }

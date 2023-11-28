@@ -17,6 +17,7 @@ namespace ThreeInRow.Back
         public int FigureCellSize { get; private set; }
 
         private Figure[,] _field;
+        public bool IsAnimation = false;
 
         private Point _firstSelectedElement = new Point(-1, -1);
         private Point _firstSwapPosition = new Point(-1, -1);
@@ -131,6 +132,8 @@ namespace ThreeInRow.Back
                         MatrixDrawingStartPoint
                         );
                     figure.IsFalling = true;
+
+                    Utility.CreateGameObject(figure);
 
                     _field[j, 0] = figure;
                 }
@@ -284,7 +287,6 @@ namespace ThreeInRow.Back
 
         private int UseBonus(BaseBonus bonus, Point point)
         {
-            _activeBonusList.Add(bonus);
             return bonus.UseBonus(point, this, _gameTimer);
         }
 
@@ -298,6 +300,11 @@ namespace ThreeInRow.Back
 
         public void SelectElement(int x, int y)
         {
+            if (IsAnimation)
+            {
+                return;
+            }
+
             if (_firstSelectedElement.X == -1 || _firstSelectedElement.Y == -1)
             {
                 _firstSelectedElement.X = x;
@@ -312,6 +319,8 @@ namespace ThreeInRow.Back
                 UnSelectElement();
                 return;
             }
+
+            IsAnimation = true;
 
             _secondSelectedElement = new Point(x, y);
 
@@ -337,10 +346,18 @@ namespace ThreeInRow.Back
             _field[_firstSelectedElement.X, _firstSelectedElement.Y].IsSelected = false;
             _firstSelectedElement.X = -1;
             _firstSelectedElement.Y = -1;
+            _secondSelectedElement.X = -1;
+            _secondSelectedElement.Y = -1;
         }
 
         private void PlaySwapAnimation(object sender, EventArgs e)
         {
+            if (_firstSelectedElement.X == -1 || _firstSelectedElement.Y == -1
+                || _secondSelectedElement.X == -1 || _secondSelectedElement.Y == -1)
+            {
+                return;
+            }
+
             Figure firstSelectedFigure = _field[_firstSelectedElement.X, _firstSelectedElement.Y];
             int distanceX = firstSelectedFigure.Position.X - _firstSwapPosition.X;
             int distanceY = firstSelectedFigure.Position.Y - _firstSwapPosition.Y;
@@ -360,6 +377,7 @@ namespace ThreeInRow.Back
                 _gameTimer.Tick -= PlaySwapAnimation;
                 _isReturnSwap = false;
                 UnSelectElement();
+                IsAnimation = false;
                 return;
             }
 
@@ -371,6 +389,7 @@ namespace ThreeInRow.Back
             }
 
             _gameTimer.Tick -= PlaySwapAnimation;
+            IsAnimation = false;
             UnSelectElement();
         }
 
@@ -390,7 +409,6 @@ namespace ThreeInRow.Back
         public void Swap(Point element1, Point element2)
         {
             Figure figure = _field[element1.X, element1.Y];
-            figure.IsSelected = false;
             _field[element1.X, element1.Y] = _field[element2.X, element2.Y];
             _field[element2.X, element2.Y] = figure;
         }
@@ -453,23 +471,16 @@ namespace ThreeInRow.Back
             return null;
         }
 
-        public void DrawField(Graphics g)
+        public Point GetElementCoordinate(Point coordinate)
         {
-            for (int i = 0; i < rowsCount; i++)
-            {
-                for (int j = 0; j < columnsCount; j++)
-                {
-                    _field[i, j].Draw(g);
-                }
-            }
+            Point elementCooridinate = new Point();
+            elementCooridinate.X = coordinate.X - MatrixDrawingStartPoint;
+            elementCooridinate.Y = coordinate.Y - MatrixDrawingStartPoint;
 
-            for (int i = 0; i < _activeBonusList.Count; i++)
-            {
-                if (_activeBonusList[i].Draw(g))
-                {
-                    _activeBonusList.RemoveAt(i);
-                }
-            }
+            elementCooridinate.X /= FigureCellSize;
+            elementCooridinate.Y /= FigureCellSize;
+
+            return elementCooridinate;
         }
 
         public void Subscribe(IFigureDestroyedObserver observer)
