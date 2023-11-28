@@ -50,7 +50,6 @@
     <Compile Include="Domain\AnimatorFactory\DestroyFigureCreator.cs" />
     <Compile Include="Domain\AnimatorFactory\FallAnimatorCreator.cs" />
     <Compile Include="Domain\AnimatorFactory\SelectFigureAnimatorCreator.cs" />
-    <Compile Include="Domain\Bonus\BaseDestroyerBonus.cs" />
     <Compile Include="Domain\Bonus\BombBonusCommand.cs" />
     <Compile Include="Domain\BonusFactory\BombBonusCreator.cs" />
     <Compile Include="Domain\BonusFactory\IBonusCreator.cs" />
@@ -63,7 +62,6 @@
     <Compile Include="Domain\FigureFactory\EmptyFigureCreator.cs" />
     <Compile Include="Domain\FigureFactory\FigureCreator.cs" />
     <Compile Include="Domain\GameField.cs" />
-    <Compile Include="Domain\Bonus\HorizontalDestroyerBonusCommand.cs" />
     <Compile Include="Domain\Bonus\BaseBonus.cs" />
     <Compile Include="Domain\BonusFactory\HorizontalDestroyerBonusCreator.cs" />
     <Compile Include="Domain\IGameObject.cs" />
@@ -71,7 +69,6 @@
     <Compile Include="Domain\IFigureDestroyedObserver.cs" />
     <Compile Include="Domain\Extensions\RandomElementListExtension.cs" />
     <Compile Include="Domain\FigureFactory\RandomFigureCreator.cs" />
-    <Compile Include="Domain\Bonus\VerticalDestroyerBonusCommand.cs" />
     <Compile Include="Domain\BonusFactory\VerticalDestroyerBonusCreator.cs" />
     <Compile Include="Domain\IScene.cs" />
     <Compile Include="Domain\Utility.cs" />

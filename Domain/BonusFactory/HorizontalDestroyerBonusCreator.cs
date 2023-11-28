@@ -9,13 +9,6 @@ namespace ThreeInRow.Domain
 
         public HorizontalDestroyerBonusCreator()
         {
-            /*_horizontalDestroyerPrototype = new HorizontalDestroyerBonusCommand(
-                Resource1.HorizontalDestroyer,
-                500,
-                Resource1.destroyer_left,
-                Resource1.destroyer_right
-            );*/
-
             _horizontalDestroyerPrototype = new HorizontalDestroyersBonus(Resource1.HorizontalDestroyer, 500);
         }
 

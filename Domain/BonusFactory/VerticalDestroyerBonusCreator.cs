@@ -9,13 +9,6 @@ namespace ThreeInRow.Domain
 
         public VerticalDestroyerBonusCreator()
         {
-            /*_verticalDestroyerPrototype = new VerticalDestroyerBonusCommand(
-                Resource1.VerticalDestroyer,
-                500,
-                Resource1.destroyer_up,
-                Resource1.destroyer_douwn
-            );*/
-
             _verticalDestroyerPrototype = new VerticalDestroyersBonus(Resource1.VerticalDestroyer, 500);
         }
         public BaseBonus CreateBonus()
