@@ -79,6 +79,8 @@ namespace ThreeInRow.Back
         {
             SpawnNewElements();
 
+            bool isSomethingFalling = false;
+
             for (int i = 0; i < columnsCount - 1; i++)
             {
                 for (int j = 0; j < rowsCount; j++)
@@ -86,6 +88,7 @@ namespace ThreeInRow.Back
                     if (_field[j, i + 1].Type == FigureType.Empty && _field[j, i].Type != FigureType.Empty)
                     {
                         _field[j, i].IsFalling = true;
+                        isSomethingFalling = true;
 
                         if (_field[j, i].Position.Y < _field[j, i + 1].Position.Y)
                         {
@@ -118,6 +121,7 @@ namespace ThreeInRow.Back
             }
 
             SearchMathcing();
+            IsAnimation = isSomethingFalling;
         }
 
         private void SpawnNewElements()
